@@ -1,12 +1,16 @@
-var ServerAPI = (function () {
+define([
+    "Issue", 
+    "server/ServerQuery"
+], function(Issue, ServerQuery) {
     function ServerAPI() {
     }
-    ServerAPI.getAllIssues = function () {
+
+    ServerAPI.prototype.getAllIssues = function() {
         var query = new ServerQuery();
         return this.getIssues(query);
     };
 
-    ServerAPI.getIssues = function (query) {
+    ServerAPI.prototype.getIssues = function(query) {
         var requestURI = this.SERVER_URI;
         requestURI += this.ISSUES_EXT;
         requestURI += query.toString;
@@ -16,15 +20,17 @@ var ServerAPI = (function () {
         return [dummyIssue];
     };
 
-    ServerAPI.getBountiesForIssue = function (issueId) {
+    ServerAPI.prototype.getBountiesForIssue = function (issueId) {
         var requestURI = this.SERVER_URI;
         requestURI += this.ISSUES_EXT;
         requestURI += "?issueId=" + issueId;
 
         return [];
     };
-    ServerAPI.SERVER_URI = "https://git-spur.herokuapp.com/api/";
-    ServerAPI.ISSUES_EXT = "issues/";
-    ServerAPI.BOUNTIES_EXT = "bounties/";
+
+    ServerAPI.prototype.SERVER_URI = "https://git-spur.herokuapp.com/api/";
+    ServerAPI.prototype.ISSUES_EXT = "issues/";
+    ServerAPI.prototype.BOUNTIES_EXT = "bounties/";
+    
     return ServerAPI;
-})();
+});
