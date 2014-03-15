@@ -15,7 +15,7 @@ define([
         requestURI += this.ISSUES_EXT;
         requestURI += query.toString;
 
-        var dummyIssue = new Issue(1, "Remake PHP", "https://david.smel.ls", 100);
+        var dummyIssue = new Issue(1, "Remake PHP", "https://david.smel.ls", "JavaScript", 100);
 
         return [dummyIssue];
     };
