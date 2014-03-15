@@ -10,19 +10,23 @@ sequelize = new Sequelize(
       dialect: 'postgres',
     })
 
+
 Issue = sequelize.define('Issue', {
-  name: Sequelize.STRING,
+  id: {type: Sequelize.STRING, primaryKey: true},
   uri: Sequelize.STRING
 })
 
 Bounty = sequelize.define('Bounty', {
     // Issue ID many to one.
   expires: Sequelize.DATE,
+  name: Sequelize.STRING,
   amount: Sequelize.INTEGER, // mBTC
   email: Sequelize.STRING,
 })
 
-Issue.hasMany(Bounty, {})
+Issue.hasMany(Bounty, {as: "Bounties"});
+
+sequelize.sync()
 
 exports.Issue = Issue
 exports.Bounty = Bounty
