@@ -23,7 +23,7 @@ exports.getIssues = function(req, res){
 
 exports.addBounty = function(req, res){
 
-	issueUrl = req.body.issueUrl;
+	issueUrl = req.body.issueUri;
 
 	issueId = idFromUrl(issueUrl);
 
