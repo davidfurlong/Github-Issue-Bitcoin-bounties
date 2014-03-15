@@ -19,7 +19,7 @@ exports.getIssues = function(req, res){
 exports.getIssue = function(req, res){
 	console.log(req.params)
 
-	Issue.find({id: req.params.issueId[0]}).then(function(issue){
+	Issue.find(req.params.issueId[0]).then(function(issue){
 		response = {
 			data: issue,
 		};
@@ -53,7 +53,7 @@ exports.getBounty = function(req, res){
 
 	console.log(req.params)
 
-	Bounty.find({id: req.params.bountyId[0]}).then(function(qr){
+	Bounty.find(req.params.bountyId[0]).then(function(qr){
 		response = {
 			data: qr,
 		};
