@@ -10,11 +10,8 @@
 
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">  
 
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link href="styles/bootstrapthemed.css" rel="stylesheet">
 
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
@@ -23,7 +20,7 @@
   
   </head>
   <body>
-    <div class="container-fluid">
+    <div class="container-fluid outermost">
       <nav class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
           <!-- Brand and toggle get grouped for better mobile display -->
@@ -39,7 +36,7 @@
           <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
               <li>
-                <button type="submit" class="btn btn-default navbar-btn">Add a Bounty</button>
+                <button id="add-bounty" type="submit" class="btn btn-warning" style="margin-top:7px">Add a Bounty</button>
               </li>
             </ul>
           </div><!-- /.navbar-collapse -->
@@ -80,12 +77,26 @@
                   <input type="checkbox"> Only allow contributors to the repository to claim this bounty <!-- TODO ADD HELP QUESTION  MARK -->
                 </label>  
               </div>
+              <br/>
               <button type="submit" class="btn btn-default">Proceed to Payment</button>
             </form>
             <!-- PAGE CONTENT END -->
           </div>
         </div>
       </div>     
+      <div id="footerfixer"></div>     
     </div>
+    <footer>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <span><a href="">About</a></span>    
+            <span><a href="">Legal</a></span>
+            <span><a href="">Contact</a></span>
+            <span>Beta 0.4</span>
+          </div>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>

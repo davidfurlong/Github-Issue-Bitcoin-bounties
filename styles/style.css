@@ -13,6 +13,73 @@ body {
 	letter-spacing: 1px;
 }
 
+.navbar .container-fluid, .navbar {
+	border-top-right-radius: 0px;
+	border-top-left-radius: 0px;
+}
+
 addBountyBtn {
 
+}
+
+button[type="button"],button[type="submit"]{
+	outline:none !important;
+}
+
+.outermost {
+	margin-left:100px;
+	margin-right:100px;
+	margin-bottom:40px;
+}
+
+html, body {height: 100%;}
+
+.outermost {min-height: 100%;}
+
+#footerfixer {
+	overflow:auto;
+	padding-bottom: 100px;
+}  /* must be same height as the footer */
+
+footer {
+	position: relative;
+	margin-top: -100px; /* negative value of footer height */
+	height: 100px;
+	clear:both;
+	background:royalblue;
+	color:#333;
+} 
+
+footer a {
+	color:white;
+}
+
+footer a:hover {
+	color:#333;
+	text-decoration: none;
+}
+
+footer a:active {
+	color:#fe4e50;
+}
+
+footer .row div {
+	padding-top:20px;
+	text-align:center;
+}
+
+footer .row span {
+	padding-left:10px;
+	padding-right:10px;
+}
+
+
+
+/*Opera Fix*/
+body:before {
+	content:"";
+	height:100%;
+	float:left;
+	width:0;
+	margin-top:-32767px;/
 }

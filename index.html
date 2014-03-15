@@ -10,11 +10,7 @@
 
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">  
 
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+    <link href="styles/bootstrapthemed.css" rel="stylesheet">
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
@@ -23,7 +19,7 @@
   
   </head>
   <body>
-    <div class="container-fluid">
+    <div class="container-fluid outermost">
       <nav class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
           <!-- Brand and toggle get grouped for better mobile display -->
@@ -39,7 +35,7 @@
           <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
               <li>
-                <a id="addBountyBtn" href="addBounty.html">Add a Bounty</a>
+                <button id="add-bounty" type="submit" class="btn btn-warning" style="margin-top:7px">Add a Bounty</button>
               </li>
             </ul>
           </div><!-- /.navbar-collapse -->
@@ -49,19 +45,39 @@
         <div class="col-md-8 .col-md-offset-1">
           <div class="row" id="description">
             <div class="col-md-12">
-              GitBounty connects people who need new features on open source projects with developers who can make these features happen. Each <i>bounty</i> consists of a Github issue, a reward of Bitcoins and an expiry date.
+              <h3>
+                GitBounty connects people who need new features on <b>open source projects</b> with developers who can make these features happen. Each <i>bounty</i> consists of a Github issue, a <b>reward</b> of Bitcoins and an expiry date.
+              </h3>
             </div>
           </div>
           <div class="row">
             <div class="col-md-12">
-              Example
+              <h4>
+                Heres how it works.
+                [ENTER PRETTY EXPLANATION]
+              </h4>
             </div>
           </div>
         </div>
         <div class="col-md-3">
-          Righthand bar - Live ticker on claims?
+          <h3>
+            Recently Claimed Bounties
+          </h3>
         </div><!--/span-->
-      </div>     
+      </div>
+      <div id="footerfixer"></div>     
     </div>
+    <footer>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <span><a href="">About</a></span>    
+            <span><a href="">Legal</a></span>
+            <span><a href="">Contact</a></span>
+            <span>Beta 0.4</span>
+          </div>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>
