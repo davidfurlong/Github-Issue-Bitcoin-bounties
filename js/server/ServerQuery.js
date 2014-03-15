@@ -1,4 +1,6 @@
-var ServerQuery = (function () {
+define([
+    "server/QueryConstraint"
+], function(QueryConstraint) {
     function ServerQuery() {
         this.constraints = [];
     }
@@ -15,24 +17,4 @@ var ServerQuery = (function () {
         return queryString;
     };
     return ServerQuery;
-})();
-
-var QueryConstraint = (function () {
-    function QueryConstraint(argument, value) {
-        this.argument = argument;
-        this.value = value;
-    }
-    QueryConstraint.prototype.toString = function (isFirst) {
-        var op;
-        if (isFirst)
-            op = "?";
-        else
-            op = "&";
-
-        var constraintString = "";
-        constraintString += op + this.argument;
-        constraintString += "=" + this.value;
-        return constraintString;
-    };
-    return QueryConstraint;
-})();
+});

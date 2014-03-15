@@ -1,4 +1,6 @@
-var Issue = (function () {
+define([
+
+], function() {
     function Issue(id, name, uri, bounty) {
         this.id = id;
         this.name = name;
@@ -6,4 +8,4 @@ var Issue = (function () {
         this.bounty = bounty;
     }
     return Issue;
-})();
+});
