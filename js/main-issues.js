@@ -36,7 +36,6 @@ define(["common",
             }
         });
 
->>>>>>> FETCH_HEAD
         $('#searchIssues').keyup(function(){
             searchIssues($('#searchIssues').val());
         });
