@@ -3,15 +3,15 @@ table.tablesorter {
 	font-family:arial;
 	background-color: #CDCDCD;
 	margin:10px 0pt 15px;
-	font-size: 8pt;
+	font-size: 12pt;
 	width: 100%;
 	text-align: left;
 }
 table.tablesorter thead tr th, table.tablesorter tfoot tr th {
-	background-color: #e6EEEE;
-	border: 1px solid #FFF;
-	font-size: 8pt;
-	padding: 4px;
+	background-color: #f8f8f8;
+	//border: 1px solid #FFF;
+	font-size: 10pt;
+	padding: 10px;
 }
 table.tablesorter thead tr .header {
 	background-image: url(bg.gif);
@@ -35,5 +35,7 @@ table.tablesorter thead tr .headerSortDown {
 	background-image: url(desc.gif);
 }
 table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
-background-color: #8dbdd8;
+	/*background-color: #8dbdd8;*/
+	background-color: royalblue;
+	color:white;
 }
