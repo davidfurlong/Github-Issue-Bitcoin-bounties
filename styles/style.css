@@ -10,7 +10,19 @@ body {
 }
 
 .navbar-brand {
-	letter-spacing: 1px;
+	/*letter-spacing: 1px;*/
+	font-family:'Merriweather';
+	font-style: italic;
+	font-weight:700;
+	padding-left:0px;
+	
+	font-size:25pt;
+	text-shadow: 1px 1px 0px #aaa;
+}
+
+.navbar {
+	background:transparent;
+	padding-top:15px;
 }
 
 .navbar .container-fluid, .navbar {
