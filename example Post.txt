@@ -1,0 +1,18 @@
+example Post
+
+{
+	"issueUrl":"https://github.com/CadiT/RecipeBook/issues/1",
+	"name":"Gantt chart recipes",
+	"amount":"10",
+	"email":"edwardshaw9@gmail.com",
+	"expires":"2",
+}
+
+
+curl -d '{
+"issueUri":"https://github.com/CadiT/RecipeBook/issues/1",
+"name":"Gantt chart recipes",
+"amount":"10",
+"email":"edwardshaw9@gmail.com",
+"expires":"2"
+}' -X POST -H "Content-Type: application/json" localhost:3000/api/bounties/
