@@ -1,8 +1,11 @@
 var Sequelize = require("sequelize")
+
+var pgdb = process.env.DATABASE_URL
+
+console.log(pgdb)
+
 sequelize = new Sequelize(
     process.env.DATABASE_URL, 
-    process.env.PGUSER, 
-    process.env.PGPASSWORD, 
     {
       dialect: 'postgres',
     })
