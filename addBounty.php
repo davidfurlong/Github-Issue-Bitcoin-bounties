@@ -49,16 +49,45 @@
         </div><!-- /.container-fluid -->
       </nav>
       <div class="row">
-        <div class="col-md-8 .col-md-offset-1">
-          <div class="row" id="bounty-list">
-            <div class="row bountypost">
-              Example
-            </div>
+        <div class="col-md-1 .col-md-offset-1">
+          <a href="index.php">
+            <i class="fa fa-angle-left" style="padding-right:5px"></i>Back
+          </a>
+        </div>
+        <div class="col-md-9 .col-md-offset-1">  
+          <div class="row" id="add-bounty">
+          <!-- PAGE CONTENT START -->
+            <form role="form">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Github Issue URL</label>
+                <input type="url" class="form-control" id="exampleInputEmail1" placeholder="Ex. https://github.com/willzeng/WikiNets/issues/169">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Name of your Organization/Project [Optional]</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Ex. ">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Ex. spurrobot@gmail.com">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Bounty Amount in Bitcoins</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Ex. 0.0314 Bitcoins">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Bounty Expiration Date [Optional]</label>
+                <input type="date" class="form-control" id="exampleInputPassword1" placeholder="">
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox"> Only allow contributors to the repository to claim this bounty <!-- TODO ADD HELP QUESTION  MARK -->
+                </label>  
+              </div>
+              <button type="submit" class="btn btn-default">Proceed to Payment</button>
+            </form>
+            <!-- PAGE CONTENT END -->
           </div>
         </div>
-        <div class="col-md-3">
-          Righthand bar - Live ticker on claims?
-        </div><!--/span-->
       </div>     
     </div>
   </body>
