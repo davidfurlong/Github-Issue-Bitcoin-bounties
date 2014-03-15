@@ -18,8 +18,7 @@ Issue = sequelize.define('Issue', {
 
 Bounty = sequelize.define('Bounty', {
     // Issue ID many to one.
-  expires: Sequelize.DATE,
-  name: Sequelize.STRING,
+  expiresAt: Sequelize.DATE,
   amount: Sequelize.INTEGER, // mBTC
   email: Sequelize.STRING,
 })
