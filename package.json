@@ -1,14 +1,22 @@
 {
-	"name": "git-spur",
-	"description": "Spur on open source development.",
-	"version": "0.0.1",
-	"private": true,
-	"repository" : { 
-		"type" : "git",	
-		 "url" : "https://github.com/davidfurlong/Spur.git"
+  "name": "git-spur",
+  "description": "Spur on open source development with GitHub bounties.",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "repository" : {
+  		"type": "git",
+  		"url": "https://github.com/davidfurlong/Spur.git"
   	},
-
-	"dependencies": {
-		"express": "3.4.8"
-	}
+  "dependencies": {
+    "express": "~3.4.8",
+    "static-favicon": "~1.0.0",
+    "morgan": "~1.0.0",
+    "cookie-parser": "~1.0.1",
+    "body-parser": "~1.0.0",
+    "debug": "~0.7.4",
+    "jade": "~1.3.0"
+  }
 }
