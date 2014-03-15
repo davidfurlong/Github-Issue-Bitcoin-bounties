@@ -1,0 +1,38 @@
+-- phpMyAdmin SQL Dump
+-- version 4.0.6
+-- http://www.phpmyadmin.net
+--
+-- Host: localhost
+-- Generation Time: Mar 15, 2014 at 02:18 PM
+-- Server version: 5.5.33
+-- PHP Version: 5.5.3
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+--
+-- Database: `GHspur`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bounties`
+--
+
+CREATE TABLE `bounties` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `bounty` float NOT NULL DEFAULT '0',
+  `settime` bigint(20) NOT NULL,
+  `expirytime` bigint(20) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '0',
+  `onlycontributorsallowed` tinyint(1) NOT NULL,
+  `issuetitle` varchar(80) NOT NULL,
+  `issuebody` text NOT NULL,
+  `issueurl` text NOT NULL,
+  `reponame` text NOT NULL,
+  `repourl` text NOT NULL,
+  `submitteremail` text NOT NULL,
+  `claimers` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
