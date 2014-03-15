@@ -27,6 +27,7 @@ define(["common",
             var html = "<tr'>";
             html += "<td>" + issue.bounty + "</td>";
             html += "<td>" + issue.name + "</td>";
+            html += "<td>" + "</td>";
             //html += "<td>" + "$" + issue.bounty * 100 + "</td>";
             html += "<td>" + issue.language + "</td>";
             html += "<td>" + "</td>";
@@ -50,17 +51,19 @@ define(["common",
             var mh = query.match(hashtagregex);
             var ma = query.match(atregex);
             // remove common words
-            var terms = query.trim().toLowerCase().replace(/\b(?:(the)|(it)|(is)|(we)|(all)|(a)|(an)|(by)|(to)|(you)|(me)|(he)|(she)|(they)|(we)|(how)|(it)|(i)|(are)|(to)|(for)|(of)|(with))\b/ig, '');
+            var terms = query.trim().toLowerCase().replace(/\b(?:(the)|(it)|(is)|(we)|(all)|(a)|(an)|(by)|(to)|(you)|(me)|(he)|(she)|(they)|(we)|(how)|(it)|(i)|(are)|(to)|(for)|(of)|(with))\b/ig, '').replace(',',' ').replace('.',' ');
             terms = terms.split(' ');
 
             //TODO hide certain issues
             var isMatch = false;
             for(var i=0;i<x.length;i++){
                 isMatch = false;
-                var t = $(x[i].children[0]).text().toLowerCase() + " " + $(x[i].children[1]).text();
+                var t = $(x[i].children[0]).text() + " " + $(x[i].children[1]).text()+ " "+$(x[i].children[2]).text();
                 t = t.toLowerCase();
-                var l = $(x[i].children[2]).text().toLowerCase();
+                var l = $(x[i].children[2]).text();
+                l = l.toLowerCase();
 
+                /* Unnecessary
                 if(ma!=null){ // found @ symbol
                     for(var k=0;k<ma.length;k++){
                         var temp = ma[k];
@@ -69,6 +72,8 @@ define(["common",
                         }
                     }
                 }
+                */
+
                 for(var j=0;j<terms.length;j++){
                     if(t.indexOf(terms[j])>=0)
                         isMatch = true;
