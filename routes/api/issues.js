@@ -3,7 +3,13 @@ var Url = require('url')
 
 
 exports.getIssues = function(req, res){
-	Issue.findAll().then(function(qr){
+	searchQuery = {}
+	for (var key in req.query){
+		if (key in Issue.rawAttributes)
+			searchQuery[key] = req.query[key]
+	}
+
+	Issue.findAll({where: searchQuery}).then(function(qr){
 		if (qr == null){
 			res.send(404, "Not found.")
 			return
