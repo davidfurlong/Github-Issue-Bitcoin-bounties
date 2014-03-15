@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
   
     <script src="js/lib/moment-with-langs.js"></script>
-    <script src="js/lib/jquery-1.10.2.min.js"></script>
+    <script src="js/lib/jquery-2.1.0.min.js"></script>
 
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">  
 
@@ -42,7 +42,7 @@
           <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
               <li>
-                <button type="submit" class="btn btn-default navbar-btn">Add a Bounty</button>
+                <button type="submit" class="btn btn-default navbar-btn" onclick="href:addBounty.php">Add a Bounty</button>
               </li>
             </ul>
           </div><!-- /.navbar-collapse -->
@@ -51,8 +51,10 @@
       <div class="row">
         <div class="col-md-8 .col-md-offset-1">
           <div class="row" id="bounty-list">
-            <div class="row bountypost">
-              Example
+            <div class="col-md-11 .col-md-offset-1">
+              <div class="row bountypost">
+                Example
+              </div>
             </div>
           </div>
         </div>

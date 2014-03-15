@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
   
     <script src="js/lib/moment-with-langs.js"></script>
-    <script src="js/lib/jquery-1.10.2.min.js"></script>
+    <script src="js/lib/jquery-2.1.0.min.js"></script>
 
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">  
 
@@ -49,16 +49,28 @@
         </div><!-- /.container-fluid -->
       </nav>
       <div class="row">
-        <div class="col-md-8 .col-md-offset-1">
-          <div class="row" id="bounty-list">
-            <div class="row bountypost">
-              Example
-            </div>
+        <div class="col-md-1 .col-md-offset-1">
+          <a href="index.php">
+            <i class="fa fa-angle-left" style="padding-right:5px"></i>See all Bounties
+          </a>
+        </div>
+        <div class="col-md-9 .col-md-offset-1">  
+          <div class="row" id="add-bounty">
+          <!-- PAGE CONTENT START -->
+            <p>
+              Here is the [PENDING/APPROVED] pull request by Github user <a href="">USER NAME</a> for issue <a href="">ISSUE NAME</a>
+            </p>
+            <p>
+              Code here?
+            </p>
+            <form class="form-inline" role="form">
+              <button type="submit" class="btn btn-danger">Decline</button>
+              <!-- Decline Triggers textarea that asks for a reason -->
+              <button type="submit" class="btn btn-success">Approve</button>
+            </form>
+            <!-- PAGE CONTENT END -->
           </div>
         </div>
-        <div class="col-md-3">
-          Righthand bar - Live ticker on claims?
-        </div><!--/span-->
       </div>     
     </div>
   </body>
