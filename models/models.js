@@ -27,16 +27,12 @@ Bounty = sequelize.define('Bounty', {
   expiresAt: {type: Sequelize.DATE, allowNull: false},
   amount: {type: Sequelize.BIGINT, allowNull: false}, // mBTC
   email: {type: Sequelize.STRING, allowNull: false},
+  address: {type: Sequelize.STRING, allowNull: false},
+  privkey: {type: Sequelize.STRING, allowNull: false},
+  confirmedAmount: {type: Sequelize.BIGINT, allowNull: false}
 })
 
 Issue.hasMany(Bounty, {as: "Bounties"});
-
-Address = sequelize.define('Address', {
-  address: Sequelize.STRING,
-  privkey: Sequelize.STRING,
-  confirmedAmount: Sequelize.INTEGER,
-  unconfirmedAmount: Sequelize.INTEGER
-})
 
 Transactions = sequelize.define('Transactions', {
    amount: Sequelize.INTEGER,
@@ -44,12 +40,10 @@ Transactions = sequelize.define('Transactions', {
    txid: Sequelize.STRING
 })
 
-Transactions.hasOne(Address, {as: "Address"})
-Address.hasOne(Bounty, {as: "Bounty"})
+Bounty.hasOne(Transactions)
 
 sequelize.sync({force: true})
 
-exports.Address = Address
 exports.Transactions = Transactions
 exports.Issue = Issue
 exports.Bounty = Bounty
