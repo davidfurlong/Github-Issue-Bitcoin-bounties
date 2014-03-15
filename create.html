@@ -52,30 +52,31 @@
         <div class="col-md-9 .col-md-offset-1">  
           <div class="row" id="add-bounty">
           <!-- PAGE CONTENT START -->
-            <form role="form">
+            <h3 style="margin-top:0px">Add Bounty</h3>
+            <form role="form" id="create-bounty">
               <div class="form-group">
                 <label for="exampleInputEmail1">Github Issue URL</label>
-                <input type="url" class="form-control" id="exampleInputEmail1" placeholder="Ex. https://github.com/willzeng/WikiNets/issues/169">
+                <input type="url" class="form-control" id="create-issue-url" placeholder="Ex. https://github.com/willzeng/WikiNets/issues/169">
               </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Ex. spurrobot@gmail.com">
+                <input type="email" class="form-control" id="create-email" placeholder="Ex. spurrobot@gmail.com">
               </div>
               <div class="form-group">
-                <label for="exampleInputEmail1">Bounty Amount in Bitcoins</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Ex. 0.0314 Bitcoins">
+                <label for="exampleInputEmail1">Reward Amount in Bitcoins</label>
+                <input type="text" class="form-control" id="create-bitcoin-amount" placeholder="Ex. 0.0314 Bitcoins">
               </div>
               <div class="form-group">
-                <label for="exampleInputPassword1">Bounty Expiration Date [Optional]</label>
-                <input type="date" class="form-control" id="exampleInputPassword1" placeholder="">
+                <label for="exampleInputPassword1">Expiration Date [Optional]</label>
+                <input type="date" class="form-control" id="create-expiry" placeholder="">
               </div>
               <div class="checkbox">
                 <label>
-                  <input type="checkbox"> Only allow contributors to the repository to claim this bounty <!-- TODO ADD HELP QUESTION  MARK -->
+                  <input type="checkbox" id="create-collaborators-only"> Only allow collaborators to the repository the ability to claim the bounty <!-- TODO ADD HELP QUESTION  MARK -->
                 </label>  
               </div>
               <br/>
-              <button type="submit" class="btn btn-default">Proceed to Payment</button>
+              <button type="submit" class="btn btn-default" id="create-bounty-button" disabled>Proceed to Payment</button>
             </form>
             <!-- PAGE CONTENT END -->
           </div>
