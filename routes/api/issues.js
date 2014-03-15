@@ -1,6 +1,7 @@
 require("../../models/models")
 var Url = require('url')
-
+var querystring = require('querystring')
+var http = require("http")
 
 exports.getIssues = function(req, res){
 	searchQuery = {}
@@ -123,7 +124,10 @@ exports.addBounty = function(req, res){
 	var valid = validateBounty(body);
 
 	if(valid) {
-		sequelize.transaction(function(t) {
+		posturl('/create.php',{},function(wallet) {
+			var addprv = wallet.split("\n")
+
+			sequelize.transaction(function(t) {
 
 			issueUrl = body.issueUri;
 			issueParts = idFromUrl(issueUrl);
@@ -146,7 +150,10 @@ exports.addBounty = function(req, res){
 						amount:body.amount, 
 						email:body.email, 
 						expiresAt:body.expiresAt,
-						IssueId: issue.id,
+						address:addprv[0],
+						privkey:addprv[1],
+						confirmedAmount:0,
+						IssueId: issue.id
 					}, 
 					{transaction:t}
 				).then(function(bounty){
@@ -162,6 +169,9 @@ exports.addBounty = function(req, res){
 				res.send(error);
 			});
 		});
+		}, function(error) {
+			console.log(error);
+		});
 	} else {
 		res.send(400, "Invalid bounty.");
 	}
@@ -174,4 +184,31 @@ function idFromUrl(url){
 	issue = parts[4]
 
 	return [user, repo, issue]
+}
+
+function posturl(url,params,successcallback,errorcallback){
+	var post_data = querystring.stringify(params);
+
+	var options = {
+	  hostname: 'btcewallet.cloudapp.net',
+	  port: 80,
+	  path: "/create.php",
+	  method: 'POST',
+      headers: {
+  		'Content-Type': 'application/x-www-form-urlencoded',
+  		'Content-Length': post_data.length
+	  }
+	};
+
+	var req = http.request(options, function(res) {
+	  res.setEncoding('utf8');
+	  res.on('data', function (chunk) {
+	    successcallback(chunk);
+	  });
+	});
+	req.on('error', function(e) {
+  		errorcallback(e);
+	});
+	req.write(post_data);
+	req.end();
 }
