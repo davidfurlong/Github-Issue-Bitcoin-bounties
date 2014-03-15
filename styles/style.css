@@ -35,6 +35,10 @@ button[type="button"],button[type="submit"]{
 	margin-right:100px;
 }
 
+.hidden {
+	display:none;
+}
+
 html, body {height: 100%;}
 
 .outermost {min-height: 100%;}
