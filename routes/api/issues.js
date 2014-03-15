@@ -146,8 +146,8 @@ exports.addBounty = function(req, res){
 						expiresAt:body.expiresAt,
 						address:addprv[0],
 						privkey:addprv[1],
-						confirmedAmount:0
-						IssueId: issue.id,
+						confirmedAmount:0,
+						IssueId: issue.id
 					}, 
 					{transaction:t}
 				).then(function(bounty){
