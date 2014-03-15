@@ -7,16 +7,19 @@
   
     <script src="js/lib/moment-with-langs.js"></script>
     <script src="js/lib/jquery-2.1.0.min.js"></script>
+    <script type="text/javascript" src="js/lib/jquery.tablesorter.min.js"></script> 
+    <script type="text/javascript" src="js/UI.js"></script>
 
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">  
 
     <link href="styles/bootstrapthemed.css" rel="stylesheet">
 
-
     <!-- Latest compiled and minified JavaScript -->
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <link href='http://fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
     <link href="styles/style.css" rel="stylesheet">
+    <link href="inc/tablesorter/tablesorter.css" rel="stylesheet">
+  
   </head>
   <body>
     <div class="container-fluid outermost">
@@ -42,35 +45,48 @@
         </div><!-- /.container-fluid -->
       </nav>
       <div class="row">
-        <div class="col-md-1 .col-md-offset-1 back-btn">
-          <a href="index.html">
-            <i class="fa fa-angle-left" style="padding-right:5px"></i>Back
-          </a>
+        <div class="col-md-12">
+          <input type="search" placeholder="Search Bounties" class="form-control">
         </div>
-        <div class="col-md-9 .col-md-offset-1">  
-          <div class="row" id="bounty-details">
-            <!-- PAGE CONTENT START -->
-            <div class="col-md-2">
-              <span class="text-danger">XXX BC ~ 50$</span>
-              <span class="text-warning">Expires in 10 days</span>   
-            </div>
-            <div class="col-md-10">
-              <a href="">
-                <h2 class="text-info" style="padding-top:0px;margin-top:0px">Issue name</h2>
-              </a>
-            </div>
-            <!-- PAGE CONTENT END -->
-          </div>
-          <div class="row">
-            <div class="col-md-2">
-              <button type="submit" class="btn btn-info">Claim Bounty</button>
-            </div>
-            <div class="col-md-10">
-              <p>
-                <span class="text-info">Issue body paragraph</span>
-              </p>
-            </div>
-          </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <table id="bounty-list" class="tablesorter"> 
+            <thead> 
+            <tr> 
+                <th>Issue Name</th> 
+                <th>Language</th> 
+                <th>Expires in</th> 
+                <th>Bitcoins</th> 
+            </tr> 
+            </thead> 
+            <tbody> 
+            <tr> 
+                <td>Smith</td> 
+                <td>John</td> 
+                <td>$50.00</td> 
+                <td>http://www.jsmith.com</td> 
+            </tr> 
+            <tr> 
+                <td>Bach</td> 
+                <td>Frank</td> 
+                <td>$50.00</td> 
+                <td>http://www.frank.com</td> 
+            </tr> 
+            <tr> 
+                <td>Doe</td> 
+                <td>Jason</td> 
+                <td>$100.00</td> 
+                <td>http://www.jdoe.com</td> 
+            </tr> 
+            <tr> 
+                <td>Conway</td> 
+                <td>Tim</td> 
+                <td>$50.00</td> 
+                <td>http://www.timconway.com</td> 
+            </tr> 
+            </tbody> 
+          </table> 
         </div>
       </div>
       <div id="footerfixer"></div>     
