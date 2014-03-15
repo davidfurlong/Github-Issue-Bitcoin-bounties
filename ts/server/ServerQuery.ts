@@ -1,4 +1,4 @@
-class ServerQuery {
+export class ServerQuery {
     private constraints: QueryConstraint[] = [];
     
     public addConstraint(argument: string, value: string) {
@@ -15,7 +15,7 @@ class ServerQuery {
     }
 }
 
-class QueryConstraint {
+export class QueryConstraint {
     constructor(public argument: string, public value: string) {
     }
     
