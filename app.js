@@ -43,8 +43,15 @@ app.param(function(name, fn){
 app.param("issueId", /^.+$/);
 app.param("bountyId", /^\d+$/);
 
+app.all('/api/*', function(req, res, next){
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+})
 app.get('/api/issues/', api.getIssues);
 app.get('/api/issues/:issueId', api.getIssue);
+
+app.get('/api/issues/:issueId/bounties/', api.getIssue);
 
 app.get('/api/bounties/', api.getBounties);
 app.get('/api/bounties/:bountyId', api.getBounty);

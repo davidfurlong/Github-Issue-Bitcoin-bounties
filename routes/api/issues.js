@@ -3,30 +3,56 @@ var Url = require('url')
 
 
 exports.getIssues = function(req, res){
-	Issue.findAll().then(function(issues){
+	Issue.findAll().then(function(qr){
+		if (qr == null){
+			res.send(404, "Not found.")
+			return
+		}
+
 		response = {
-			data: issues,
+			data: qr,
 		}
 
 	    res.setHeader('Content-Type', 'application/json');
 	    res.end(JSON.stringify(response));
 	}, function(err){
-		res.statusCode=500;
+		res.statusCode=500; 
 		next(new Error('Issues query failed.'))
 	});
 };
 
-exports.getIssue = function(req, res){
-	console.log(req.params)
+exports.getIssueBounties = function(req, res){
+	Issue.findAll().then(function(qr){
+		if (qr == null){
+			res.send(404, "Not found.")
+			return
+		}
 
-	Issue.find(req.params.issueId[0]).then(function(issue){
+		Bounty.findAll({where: {IssueId: qr.id}}, function(bounties){
+
+			response = {
+				data: bounties,
+			}
+
+		    res.setHeader('Content-Type', 'application/json');
+		    res.end(JSON.stringify(response));
+		});
+	});
+};
+
+exports.getIssue = function(req, res){
+	Issue.find(req.params.issueId[0]).then(function(qr){
+		if (qr == null){
+			res.send(404, "Not found.")
+			return
+		}
+
 		response = {
-			data: issue,
+			data: qr,
 		};
 
 	    res.setHeader('Content-Type', 'application/json');
 	    res.end(JSON.stringify(response));
-
 	}, function(err){
 		res.statusCode=500;
 		next(new Error('Issue query failed.'))
@@ -36,6 +62,11 @@ exports.getIssue = function(req, res){
 
 exports.getBounties = function(req, res){
 	Bounty.findAll().then(function(qr){
+		if (qr == null){
+			res.send(404, "Not found.")
+			return
+		}
+
 		response = {
 			data: qr,
 		};
@@ -50,10 +81,12 @@ exports.getBounties = function(req, res){
 }
 
 exports.getBounty = function(req, res){
-
-	console.log(req.params)
-
 	Bounty.find(req.params.bountyId[0]).then(function(qr){
+		if (qr == null){
+			res.send(404, "Not found.")
+			return
+		}
+
 		response = {
 			data: qr,
 		};
@@ -74,7 +107,7 @@ function validateBounty(body){
 	valid &= (!!body.issueUri);
 	valid &= (!!body.amount);
 	valid &= (!!body.email);
-	valid &= (!!body.expires);
+	valid &= (!!body.expiresAt);
 	return valid;
 }
 
@@ -87,17 +120,39 @@ exports.addBounty = function(req, res){
 		sequelize.transaction(function(t) {
 
 			issueUrl = body.issueUri;
-			issueId = idFromUrl(issueUrl);
+			issueParts = idFromUrl(issueUrl);
+			issueId = issueParts.join("-");
 
-			Issue.findOrCreate({id:issueId}, {uri: body.issueUri}, {transaction:t}).then(function(issue){
-				Bounty.create({amount:body.amount, email:body.email, expires:body.expires}, {transaction:t}).then(function(bounty){
+			Issue.findOrCreate(
+				{id:issueId}, 
+				{
+					uri: body.issueUri,
+					user: issueParts[0],
+					repo: issueParts[1],
+					issueName: "Fake issue name.",
+					language: "Fake langugage.",
+				}, 
+				{transaction:t}
+			).then(function(issue){
+				Bounty.create(
+					{
+						amount:body.amount, 
+						email:body.email, 
+						expiresAt:body.expiresAt,
+					}, 
+					{transaction:t}
+				).then(function(bounty){
 
 					res.statusCode=200;
 				    res.setHeader('Content-Type', 'application/json');
 					res.end(JSON.stringify(bounty));
+					t.commit();
 				});
+			}).catch(function(error){
+				console.log(error);
+				res.statusCode=500;
+				res.send(error);
 			});
-			t.commit();
 		});
 	} else {
 		res.send(400, "Invalid bounty.");
@@ -110,5 +165,5 @@ function idFromUrl(url){
 	repo = parts[2]
 	issue = parts[4]
 
-	return user+"/"+repo+"/"+issue
+	return [user, repo, issue]
 }
