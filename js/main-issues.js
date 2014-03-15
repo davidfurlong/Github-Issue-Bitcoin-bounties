@@ -20,20 +20,20 @@ define(["common",
         });
 
         var serverAPI = new ServerAPI();
-        var issueList = serverAPI.getAllIssues();
 
-        for (var i = 0; i < issueList.length; i++) {
-            var issue = issueList[i];
-            var html = "<tr'>";
-            html += "<td>" + issue.bounty + "</td>";
-            html += "<td>" + issue.name + "</td>";
-            html += "<td>" + "</td>";
-            //html += "<td>" + "$" + issue.bounty * 100 + "</td>";
-            html += "<td>" + issue.language + "</td>";
-            html += "<td>" + "</td>";
-            html += "</tr>";
-            $('#issue-list > tbody').append(html);
-        }
+        serverAPI.getAllIssues(function(issueList) {
+            for (var i = 0; i < issueList.length; i++) {
+                var issue = issueList[i];
+                var html = "<tr>";
+                html += "<td>" + issue.bounty + "</td>";
+                html += "<td>" + issue.name + "</td>";
+                //html += "<td>" + "$" + issue.bounty * 100 + "</td>";
+                html += "<td>" + issue.language + "</td>";
+                html += "</tr>";
+                $('#issue-list > tbody:last').after(html);
+            }
+        });
+
         $('#searchIssues').keyup(function(){
             searchIssues($('#searchIssues').val());
         });
@@ -82,7 +82,5 @@ define(["common",
                     $(x[i]).addClass('hidden');
             }   
         }
-
     });
-
 });

@@ -31,5 +31,5 @@ define([
         $('#add-bounty').click(function(){
             document.location.href = "create.html";
         }); 
-    })  
+    })
 });

@@ -1,12 +1,14 @@
 define([
 
 ], function() {
-    function Issue(id, name, uri, language, bounty) {
+    function Issue(id, issueName, repoName, uri, language, bounty, expiresAt) {
         this.id = id;
-        this.name = name;
+        this.issueName = issueName;
+        this.repoName = repoName;
         this.uri = uri;
         this.language = language;
         this.bounty = bounty;
+        this.expiresAt = expiresAt;
     }
     return Issue;
 });
