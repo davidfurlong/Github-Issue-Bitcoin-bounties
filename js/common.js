@@ -23,3 +23,13 @@ require.config({
         }
     }
 });
+
+define([
+    "jquery"
+], function($) {
+    $(document).ready(function(){
+        $('#add-bounty').click(function(){
+            document.location.href = "create.html";
+        }); 
+    })  
+});
