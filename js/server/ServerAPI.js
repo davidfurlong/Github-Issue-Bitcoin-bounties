@@ -26,15 +26,15 @@ define([
         })
         .done(function(result){
             var issueList = [];
-            console.log(result);
             var data = result.data;
             for (var i = 0; i < data.length; i++) {
                 var datum = data[i];
+                console.log(datum);
                 var id = datum.id;
                 var issueName = datum.issueName;
-                var repoName = datum.repoName;
+                var repoName = datum.repo;
                 var uri = datum.uri;
-                var language = datum.langage;
+                var language = datum.language;
                 var bounty = datum.bounty;
                 var expiresAt = datum.expiresAt;
                 var issue = new Issue(id, issueName, repoName, uri, language, bounty, expiresAt);
