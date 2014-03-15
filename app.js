@@ -26,9 +26,30 @@ app.use(app.router);
 
 app.get('/', routes.index);
 
-app.get('/api/issues/', api.getIssues)
+app.param(function(name, fn){
+  if (fn instanceof RegExp) {
+    return function(req, res, next, val){
+      var captures;
+      if (captures = fn.exec(String(val))) {
+        req.params[name] = captures;
+        next();
+      } else {
+        next('route');
+      }
+    }
+  }
+});
 
-app.post('/api/bounties/', api.addBounty)
+app.param("issueId", /^.+$/);
+app.param("bountyId", /^\d+$/);
+
+app.get('/api/issues/', api.getIssues);
+app.get('/api/issues/:issueId', api.getIssue);
+
+app.get('/api/bounties/', api.getBounties);
+app.get('/api/bounties/:bountyId', api.getBounty);
+
+app.post('/api/bounties/', api.addBounty);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
