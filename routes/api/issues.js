@@ -22,13 +22,13 @@ exports.getIssues = function(req, res){
 };
 
 exports.getIssueBounties = function(req, res){
-	Issue.findAll().then(function(qr){
+	Issue.find(req.params.issueId[0]).then(function(qr){
 		if (qr == null){
 			res.send(404, "Not found.")
 			return
 		}
 
-		Bounty.findAll({where: {IssueId: qr.id}}, function(bounties){
+		Bounty.findAll({where: {IssueId: qr.id}}).then(function(bounties){
 
 			response = {
 				data: bounties,
@@ -121,11 +121,12 @@ exports.addBounty = function(req, res){
 
 			issueUrl = body.issueUri;
 			issueParts = idFromUrl(issueUrl);
-			issueId = issueParts.join("-");
+			issueStrId = issueParts.join("/");
 
 			Issue.findOrCreate(
-				{id:issueId}, 
+				{strid:issueStrId}, 
 				{
+					strid: issueStrId,
 					uri: body.issueUri,
 					user: issueParts[0],
 					repo: issueParts[1],
@@ -139,6 +140,7 @@ exports.addBounty = function(req, res){
 						amount:body.amount, 
 						email:body.email, 
 						expiresAt:body.expiresAt,
+						IssueId: issue.id,
 					}, 
 					{transaction:t}
 				).then(function(bounty){

@@ -14,7 +14,7 @@ sequelize = new Sequelize(
 // Cache aggregate bounty. Latest expirary. 
 
 Issue = sequelize.define('Issue', {
-  id: {type: Sequelize.STRING, primaryKey: true},
+  strid: {type: Sequelize.STRING, unique: true},
   user: {type: Sequelize.STRING, allowNull: false},
   repo: {type: Sequelize.STRING, allowNull: false},
   issueName: {type: Sequelize.STRING, allowNull: false},
