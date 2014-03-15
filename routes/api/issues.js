@@ -97,6 +97,7 @@ exports.addBounty = function(req, res){
 					res.end(JSON.stringify(bounty));
 				});
 			});
+			t.commit();
 		});
 	} else {
 		res.send(400, "Invalid bounty.");
