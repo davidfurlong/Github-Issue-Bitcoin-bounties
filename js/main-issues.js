@@ -27,7 +27,7 @@ define(["common",
                 console.log(issue);
                 var html = "<tr'>";
                 html += "<td><span><i class='fa fa-btc' style='font-size:19px;'></i> <b>" + issue.bounty + "</b></span>  <span style='color:gray;'>(&#8776; &#163;"+parseInt(390*issue.bounty)+")</span></td>";
-                html += "<td>" + issue.issueName + "</td>";
+                html += '<td><a href="issue.html?id=' + issue.id + '">' + issue.issueName + "</a></td>";
                 html += "<td>" + issue.repoName + "</td>";
                 //html += "<td>" + "$" + issue.bounty * 100 + "</td>";
                 html += "<td>" + issue.language + "</td>";
