@@ -21,6 +21,25 @@ exports.getIssues = function(req, res){
 	});
 };
 
+exports.getIssueBounties = function(req, res){
+	Issue.findAll().then(function(qr){
+		if (qr == null){
+			res.send(404, "Not found.")
+			return
+		}
+
+		Bounty.findAll({where: {IssueId: qr.id}}, function(bounties){
+
+			response = {
+				data: bounties,
+			}
+
+		    res.setHeader('Content-Type', 'application/json');
+		    res.end(JSON.stringify(response));
+		});
+	});
+};
+
 exports.getIssue = function(req, res){
 	Issue.find(req.params.issueId[0]).then(function(qr){
 		if (qr == null){
@@ -101,17 +120,39 @@ exports.addBounty = function(req, res){
 		sequelize.transaction(function(t) {
 
 			issueUrl = body.issueUri;
-			issueId = idFromUrl(issueUrl);
+			issueParts = idFromUrl(issueUrl);
+			issueId = issueParts.join("-");
 
-			Issue.findOrCreate({id:issueId}, {uri: body.issueUri}, {transaction:t}).then(function(issue){
-				Bounty.create({amount:body.amount, email:body.email, expiresAt:body.expiresAt}, {transaction:t}).then(function(bounty){
+			Issue.findOrCreate(
+				{id:issueId}, 
+				{
+					uri: body.issueUri,
+					user: issueParts[0],
+					repo: issueParts[1],
+					issueName: "Fake issue name.",
+					language: "Fake langugage.",
+				}, 
+				{transaction:t}
+			).then(function(issue){
+				Bounty.create(
+					{
+						amount:body.amount, 
+						email:body.email, 
+						expiresAt:body.expiresAt,
+					}, 
+					{transaction:t}
+				).then(function(bounty){
 
 					res.statusCode=200;
 				    res.setHeader('Content-Type', 'application/json');
 					res.end(JSON.stringify(bounty));
+					t.commit();
 				});
+			}).catch(function(error){
+				console.log(error);
+				res.statusCode=500;
+				res.send(error);
 			});
-			t.commit();
 		});
 	} else {
 		res.send(400, "Invalid bounty.");
@@ -124,5 +165,5 @@ function idFromUrl(url){
 	repo = parts[2]
 	issue = parts[4]
 
-	return user+"/"+repo+"/"+issue
+	return [user, repo, issue]
 }
