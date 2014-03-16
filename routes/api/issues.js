@@ -353,9 +353,9 @@ function posturl(url,params,callback){
 	  path: url,
 	  method: 'POST',
       headers: {
-  		'Content-Type': 'application/json',
+  		'Content-Type': 'application/x-www-form-urlencoded',
   		'Content-Length': post_data.length
-	  }
+	  },
 	};
 
 	var req = http.request(options, function(res) {
