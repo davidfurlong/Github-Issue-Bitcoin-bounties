@@ -290,7 +290,8 @@ exports.block = function(req, res){
 			return
 		}
 		qr.forEach(function(i, tra, a){
-			console.log(tra.txid)
+			console.log("Tra: " + tra)
+			console.log("txid" + tra.txid)
 
 			posturl("/confirms.php",{txid:tra.txid}, function(error,conf) {
 				console.log("------------ Conf: " + conf)
