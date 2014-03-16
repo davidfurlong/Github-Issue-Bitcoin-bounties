@@ -307,7 +307,7 @@ exports.block = function(req, res){
 								res.send(404, "Error, corresponding bounty not found.")
 								return
 							}
-							qr2.confirmedAmount = (new Number(qr2.amount) + new Number(qr.amount)).toString();
+							qr2.confirmedAmount = (new Number(qr2.confirmedAmount) + new Number(qr.amount)).toString();
 							qr2.save({transaction:t});
 
 							Issue.find(qr2.IssueId, {transaction:t}).then(function(qr3){
@@ -315,7 +315,7 @@ exports.block = function(req, res){
 									res.send(404, "Error, corresponding Issue not found.")
 									return
 								}
-								qr3.amount = (new Number(qr3.amount) + new Number(qr.amount)).toString();
+								qr3.confirmedAmount = (new Number(qr3.confirmedAmount) + new Number(qr.amount)).toString();
 								qr3.save({transaction:t});
 								t.commit();
 							});	
