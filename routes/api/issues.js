@@ -153,7 +153,7 @@ exports.addBounty = function(req, res){
 							issueName: issue.title,
 							language: repo.language?repo.language:"Unknown",
 							confirmedAmount:0,
-							amount:0
+							amount:0,
 						}, 
 						{transaction:t}
 					).then(function(issue){
@@ -289,8 +289,12 @@ exports.block = function(req, res){
 			res.send(200, "No data")
 			return
 		}
+
+		console.log(qr)
+
 		for(var i = 0; i < qr.length; i++) {
 			posturl("/confirms.php",{txid:qr['txid']}, function(error,conf) {
+				console.log(conf)
 				if(isInt(conf) && conf > 1) {
 					sequelize.transaction(function(t) {
 						qr.confirmed = true
