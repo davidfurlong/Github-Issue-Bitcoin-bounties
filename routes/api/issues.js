@@ -289,25 +289,23 @@ exports.block = function(req, res){
 			res.send(200, "No data")
 			return
 		}
+		qr.forEach(function(i, tra, a){
+			console.log(tra.txid)
 
-		console.log(qr)
-
-		for(var i = 0; i < qr.length; i++) {
-			console.log(qr[i]);
-			posturl("/confirms.php",{txid:qr[i]['txid']}, function(error,conf) {
+			posturl("/confirms.php",{txid:tra.txid}, function(error,conf) {
 				if(isInt(conf) && conf > 1) {
 					sequelize.transaction(function(t) {
-						qr.confirmed = true
-						qr.save({transaction:t});
+						tra.confirmed = true
+						tra.save({transaction:t});
 
-						Bounty.find(qr.BountyId,
+						Bounty.find(tra.BountyId,
 						{transaction:t}
 						).then(function(qr2){
 							if (qr2 == null){
 								res.send(404, "Error, corresponding bounty not found.")
 								return
 							}
-							qr2.confirmedAmount = (new Number(qr2.amount) + new Number(qr.amount)).toString();
+							qr2.confirmedAmount = (new Number(qr2.amount) + new Number(tra.amount)).toString();
 							qr2.save({transaction:t});
 
 							Issue.find(qr2.IssueId, {transaction:t}).then(function(qr3){
@@ -315,7 +313,7 @@ exports.block = function(req, res){
 									res.send(404, "Error, corresponding Issue not found.")
 									return
 								}
-								qr3.amount = (new Number(qr3.amount) + new Number(qr.amount)).toString();
+								qr3.amount = (new Number(qr3.amount) + new Number(tra.amount)).toString();
 								qr3.save({transaction:t});
 								t.commit();
 							});	
@@ -323,7 +321,7 @@ exports.block = function(req, res){
 					});
 				}
 			});
-		}
+		})
 		res.send(200, "Success");
 	});
 }
