@@ -3,17 +3,36 @@ define(["common",
     require([
         "jquery",
         "bootstrap", 
-        "server/ServerAPI"
-    ], function($, bootstrap, ServerAPI) {
+        "server/ServerAPI",
+        "github/GitHubAPI",
+    ], function($, bootstrap, ServerAPI, GitHubAPI) {
         $(function() {
             var serverAPI = new ServerAPI();
-            $("#submitButton").click(function() {
+            $("#submitButton").click(function(e) {
+                e.preventDefault();
                 var githubURL = $("#url").val();
                 var email = $("#email").val();
                 var bounty = $("#bounty").val();
                 var expirationDate = $("#expirationDate").val();
 
                 // Validate
+                var issueRegex = /^https?\:\/\/github.com\/(((?!\/).)+)\/(((?!\/).)+)\/issues\/(\d+)($|\/.*|\s*)$/;
+                var result = issueRegex.exec(githubURL);
+                var api = new GitHubAPI();
+                if (typeof result != "undefined" && result != null) {
+                    var username = result[1];
+                    var repoName = result[3];
+                    var issueNumber = parseInt(result[5]);
+                    api.issueExists(username, repoName, issueNumber, function(res) {
+                        if (res) {
+                            // SUCCESS
+                        } else {
+                            // FAIL
+                        }
+                    });
+                } else {
+                    console.warn("failed");
+                }
             });
             var timer=null;
             $('#url').keyup(function(){
