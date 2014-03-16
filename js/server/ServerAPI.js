@@ -20,7 +20,6 @@ define([
         requestURI += this.ISSUES_EXT;
         requestURI += query.toString();
 
-        var dummyIssue = new Issue(1, "Remake PHP", "https://david.smel.ls", "JavaScript", 100);
         $.ajax({
             url: requestURI
         })
@@ -46,41 +45,72 @@ define([
         })
         .fail(function(jqXHR, status) {
             console.error(status);
-            return [];
-        })
+            callback([]);
+        });
     };
 
     ServerAPI.prototype.getIssue = function(id, callback) {
-        if (id != 1)
-            callback(null);
-
         var requestURI = this.SERVER_URI;
-        requestURI += this.ISSUE_EXT;
-        requestURI += id;
+        requestURI += this.ISSUES_EXT;
+        requestURI += id + "/";
 
-        // TODO: AJAX
-
-        var dummyIssue = new Issue(1, "Remake PHP", "PHP", "https://david.smel.ls", "JavaScript", 100, Date.now());
-
-        console.log(dummyIssue);
-        callback(dummyIssue);      
+        $.ajax({
+            url: requestURI
+        })
+        .done(function(result){
+            console.log()
+            var datum = result.data;
+            console.log(datum);
+            var id = datum.id;
+            var issueName = datum.issueName;
+            var repoName = datum.repo;
+            var uri = datum.uri;
+            var language = datum.language;
+            var bounty = datum.bounty;
+            var expiresAt = datum.expiresAt;
+            var issue = new Issue(id, issueName, repoName, uri, language, bounty, expiresAt);
+            console.log(issue);
+            callback(issue);
+        })
+        .fail(function(jqXHR, status) {
+            console.error(status);
+            callback(null);
+        })
     };
 
     ServerAPI.prototype.getBountiesForIssue = function(issueId, callback) {
-        if (issueId != 1)
-            callback([]);
-
         var requestURI = this.SERVER_URI;
         requestURI += this.ISSUES_EXT;
-        requestURI += "?issueId=" + issueId;
+        requestURI += issueId;
+        requestURI += "/bounties/"
 
-        // TODO: AJAX
+        $.ajax({
+            url: requestURI
+        })
+        .done(function(result, status, jqXHR){
+            var bountyList = [];
+            var data = result.data;
+            for (var i = 0; i < data.length; i++) {
+                var datum = data[i];
+                console.log(datum);
+                var id = datum.id;
+                var issueId = datum.IssueId;
+                var expiresAt = datum.expiresAt;
+                var amount = parseInt(datum.amount);
+                var email = datum.email;
+                var createdAt = datum.createdAt;
+                var updatedAt = datum.updatedAt;
+                var bounty = new Bounty(id, issueId, createdAt, updatedAt, expiresAt, amount, email, true);
+                bountyList.push(bounty);
+                console.log(bounty);
+            }
 
-        var dummyBounties = [];
-        dummyBounties.push(new Bounty(1, 1, Date.now(), Date.now(), Date.now(), 1, "greg@gmail.com"));
-        dummyBounties.push(new Bounty(2, 1, Date.now(), Date.now(), Date.now(), 3, "ed@gmail.com")); 
-
-        callback(dummyBounties);
+            callback(bountyList);
+        })
+        .fail(function(jqXHR, status) {
+            console.error(status);
+            callback([]);
+        });
     };
 
     
