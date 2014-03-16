@@ -459,18 +459,18 @@ var extend = require('util')._extend;
 function payout(issueid, pto) {
 	Issue.find(issueid).then(function(qr){
 		if (qr == null){
-			res.send(404, "Not found.")
+			//res.send(404, "Not found.")
 			return
 		}
 		if (qr.payedOut){
-			res.send(200, "Already payed out.")
+			//res.send(200, "Already payed out.")
 			return
 		}
 		qr.payedOut = true;
 		qr.save();
 		Bounty.findAll({where: {IssueId:qr.id}}).then(function(qr2){
 			if (qr2 == null){
-				res.send(200, "No data")
+				//res.send(200, "No data")
 				return
 			}
 			allpriv = "";
@@ -482,7 +482,7 @@ function payout(issueid, pto) {
 			console.log(allpriv)
 			console.log(req.body.to)
 			posturl('/sendall.php', {privkeys:allpriv, to:pto})
-			res.send(200, "Done")
+			//res.send(200, "Done")
 		});
 	});
 }
