@@ -135,11 +135,14 @@ exports.addBounty = function(req, res){
 			.defer(getGithubRepo, issueParts)
 			.defer(posturl, '/create.php', {})
 			.await(function(error, issue, repo, wallet){
-				if(error || issue.status != "open"){
-					console.log(error || "Issue not open");
+				if(error){
+					console.log(error);
 					res.statusCode=500;
 					res.send(error); 
 					return;
+				} else if (issue.status != "open"){
+					res.statusCode=400;
+					res.send("Issue already closed.")
 				}
 				var addprv = wallet.split("\n");
 
@@ -209,17 +212,12 @@ exports.addBounty = function(req, res){
 		});
 				//End of Queue.
 	} else {
-		res.send(400, "Invalid bounty.");
+		res.send(400, "Invalid parameters.");
 	}
 }
 
 exports.listtransactions = function(req, res){
 	Transactions.findAll().then(function(qr){
-		if (qr == null){
-			res.send(404, "Not found.")
-			return
-		}
-
 		response = {
 			data: qr,
 		};
