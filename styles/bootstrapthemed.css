@@ -18,6 +18,14 @@ html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:1
 	box-shadow:none;
 }
 
+.well {
+	border-top:3px solid black;
+	-webkit-box-shadow:none;
+	box-shadow: none;
+	border-top-right-radius: 0px;
+	border-top-left-radius: 0px;
+}
+
 
 .btn {
 	font-family:HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Lato, Arial, 'Lucida Grande', sans-serif;

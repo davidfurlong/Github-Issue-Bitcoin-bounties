@@ -10,7 +10,6 @@
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">  
 
     <link href="styles/bootstrapthemed.css" rel="stylesheet">
-    <link href="styles/flat-ui.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Merriweather:900italic,400' rel='stylesheet' type='text/css'>
 
     <!-- Latest compiled and minified JavaScript -->
@@ -20,11 +19,11 @@
   </head>
   <body>
     <div class="container-fluid outermost" style="padding-top:30px">
-      <nav class="navbar navbar-default" role="navigation">
-        <div class="container">
+      <nav class="navbar navbar-default" role="navigation" style="margin-bottom:10px">
+        <div class="container-fluid">
           <!-- Brand and toggle get grouped for better mobile display -->
-          <div class="navbar-header">
-            <a class="navbar-brand" href="index.html"><img src="images/gitbounty.png" height="75px"></a>
+          <div class="navbar-header2">
+            <a class="navbar-brand2" href="index.html"><img src="images/gitbounty.png" height="75px"></a>
           </div>          
           <div class="collapse navbar-collapse">
         </div><!-- /.container-fluid -->
@@ -33,7 +32,7 @@
         <div class="col-md-12 col-lg-8 col-lg-offset-2">
           <div class="row" id="description">
             <div class="col-md-12">
-              <h3 style="line-height:30px">
+              <h3 style="line-height:30px;margin-left:10px;margin-bottom:20px">
                 GitBounty connects people who need new features on <b>open source projects</b> with developers who can make those features a reality.<!-- A <i>bounty</i> consists of a Github issue, a Bitcoin <b>reward</b> and an expiry date.-->
               </h3>
             </div>
@@ -43,25 +42,19 @@
               <div class="container-fluid">
                 <div class="row" style="display: table">
                   <div class="col-md-6" style="padding:10px">
-                    <div class="well" style="float:none; display:table-cell;vertical-align:top; font-size:17px">
+                    <div  id="well1" class="well" style="float:none; display:table-cell;vertical-align:top; font-size:17px;border-top-color:#e4424a;">
                       <strong>Developers</strong> provide expertise: getting the issue closed on time and claiming the reward
+                      <div style="text-align:center;padding-top:45px"><a class="fbtn" href="issues.html">Browse Paid Issues</a></div>
                     </div>
                   </div>
                   <div class="col-md-6" style="padding:10px; padding-bottom:22px">
-                    <div class="well" style="float:none; display:table-cell;vertical-align:top; font-size:17px">
+                    <div  id="well2" class="well" style="float:none; display:table-cell;vertical-align:top; font-size:17px;border-top-color:#95c009;">
                       <strong>Users</strong> provide a <i class="fa fa-btc" title="Bitcoin"></i> bounty: rewarding the developer for delivering the fix or feature they don't have the expertise to deliver
+                      <div style="text-align:center;padding-top:20px"><a class="fbtn" href="create.html">Create a Bounty</a></div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <span style="text-align:center"><a class="fbtn" href="issues.html" style="font-family:Merriweather">Browse Paid Issues</a></span>
-            </div>
-            <div class="col-md-6">
-              <span style="text-align:center"><a class="fbtn" href="create.html" style="font-family:Merriweather">Create a Bounty</a></span>
             </div>
           </div>
         </div>
