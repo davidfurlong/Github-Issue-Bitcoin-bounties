@@ -161,14 +161,26 @@ exports.addBounty = function(req, res){
 					).then(function(bounty){
 						res.statusCode=200;
 					    res.setHeader('Content-Type', 'application/json');
-						res.end(JSON.stringify(bounty));
+
+					    response = {
+					    	"bounter": bounty,
+					    	"issue": issue,
+					    	"address": bounty.address
+					    };
+
+						res.end(JSON.stringify(response));
 						t.commit();
-					}, function(error) {
+					}).catch(function(error) {
 							console.log(error);
 							res.statusCode=500;
 							res.send(error);
 							return;
-						});
+					});
+
+				}).catch(function(error){
+					console.log(error);
+					res.statusCode=500;
+					res.send(error);
 				});
 			})
 		});
