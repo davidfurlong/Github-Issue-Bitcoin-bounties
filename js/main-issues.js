@@ -24,11 +24,17 @@ define(["common",
         serverAPI.getAllIssues(function(issueList) {
             for (var i = 0; i < issueList.length; i++) {
                 var issue = issueList[i];
+                var issueRegex = /^https?\:\/\/github.com\/(((?!\/).)+)\/(((?!\/).)+)\/issues\/(\d+)($|\/.*|\s*)$/;
+                var result = issueRegex.exec(githubURL);
+                if (typeof result != "undefined" && result != null) {
+                    var username = result[1];
+                    var repoName = result[3];
+                }
                 console.log(issue);
                 var html = "<tr'>";
                 html += "<td><span><i class='fa fa-btc' style='font-size:19px;'></i> <b>" + (issue.bounty/100000000) + "</b></span><br/><span style='color:gray;font-size:14px'>&#8776; &#163;"+(390*(issue.bounty/100000000)).toFixed(2)+"</span></td>";
                 html += '<td><a href="issue.html?id=' + issue.id + '">' + issue.issueName + "</a></td>";
-                html += "<td>" + issue.repoName + "</td>";
+                html += "<td><a href='https://github.com/"+username+"/"+repoName+"'>" + issue.repoName + "</a></td>";
                 html += "<td>" + issue.language + "</td>";
                 html += "<td>" + "</td>";
                 html += "</tr>";

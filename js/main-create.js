@@ -34,7 +34,7 @@ define(["common",
                                 serverAPI.createBounty(githubURL, email, new Date(expirationDate), function(res, wasSuccessful) {
                                     if(wasSuccessful){
                                         $('#create-bounty').html('<form class="form-horizontal" role="form"><div class="form-group"><label class="col-sm-4 control-label">Bitcoin Address to send reward to</label><div class="col-sm-8"><p class="form-control-static">'+res.address+'</p></div></div></form>');
-                                        $('#add-bounty-form').find('h3').text('Add Bounty (2/2)');
+                                        $('#add-bounty-form').find('h3').html('Add Bounty<span style="color:gray;">(2/2)</span>');
                                     }
                                     else {
                                         $('#create-bounty').prepend('<div class="row"><div class="col-md-12"><div class="alert alert-danger">Issue not found</div></div></div>');
@@ -96,34 +96,6 @@ define(["common",
                 if(timer!=null)
                     clearTimeout(timer);
                 if($('#email').val()!="" && ($('#email').val()).match(emailregex)){ // #TODO
-                    $('#email').parent().removeClass('has-error');
-                    $('#email').parent().addClass('has-success');
-                }
-                else {
-                    $('#email').parent().removeClass('has-success');
-                    $('#email').parent().addClass('has-error');
-                }
-            });
-            var timer3=null;
-            $('#expirationDate').keyup(function(){
-                if(timer3!=null)
-                    clearTimeout(timer3);
-                timer3 = setTimeout(function(){
-
-                    var x = $('#expirationDate').get(0).valueAsDate;
-
-                    if((x!=null && x!=undefined) || typeof x == Date){ // #TODO
-                        $('#email').parent().removeClass('has-error');
-                        $('#email').parent().addClass('has-success');
-                    }
-                    else {
-                        $('#email').parent().removeClass('has-success');
-                        $('#email').parent().addClass('has-error');
-                    }
-                },500);
-            });
-            $('#expirationDate').change(function(){
-                if($('#email').val()!="" && $('#email').val().match(emailregex)){ // #TODO
                     $('#email').parent().removeClass('has-error');
                     $('#email').parent().addClass('has-success');
                 }
