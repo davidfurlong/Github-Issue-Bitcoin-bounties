@@ -136,7 +136,7 @@ exports.claimBountyCallback = function(req, res){
 			repoRequest = {json:true, headers: {"User-Agent": "EdShaw/gitspur",}, body:{"Authorization":"token "+oauth}};
 			url = "https://api.github.com/repo/" + issue.user + "/" + issue.repo + "/issue/" + issue.issueNumber;
 			Request.get(url, repoRequest, function(err, response, issue){
-				console.log("Status: " + issue.status);
+				console.log("Status: " + issue.state);
 			});
 		})
 	});
@@ -175,8 +175,8 @@ exports.addBounty = function(req, res){
 					res.statusCode=500;
 					res.send(error); 
 					return;
-				} else if (issue.status != "open"){
-					console.log("Issue status: " + issue.status)
+				} else if (issue.state != "open"){
+					console.log("Issue state: " + issue.state)
 					res.statusCode=400;
 					res.send("Issue already closed.")
 				}
