@@ -14,7 +14,7 @@ define(["common",
     ], function($, bootstrap, tablesorter, ServerAPI) {
         var issueId = getURLParameter("id");
         var serverAPI = new ServerAPI();
-        
+        var totalBounty = 0;
         serverAPI.getIssue(issueId, function(issue) {
             if (issue != null) {
                 $("#name-text").text(issue.issueName + "@" + issue.repoName);
@@ -25,15 +25,18 @@ define(["common",
                     for (var i = 0; i < bountyList.length; i++) {
                         var bounty = bountyList[i];
                         var html = "<tr>";
+                        totalBounty += parseInt(bounty.amount);
                         html += "<td>" + bounty.amount + "</td>";
                         html += "<td>" + bounty.createdAt + "</td>";
                         html += "<td>" + bounty.expiresAt + "</td>";
                         html += "</tr>";
-                        $('#bounty-list > tbody:last').after(html);
+                        $('#bounty-list > tbody:last').append(html);
                     }
+                    $('#claim-bounty').html("Claim "+totalBounty+" <i class='fa fa-btc'></i> Bounty");
+
                 });
             } else {
-                alert("Issue not found");
+                $($('.outermost > .row:nth-child(2)').children()[1]).html('<div class="row"><div class="col-md-12"><div class="alert alert-danger">Issue not found</div></div></div>');
             }
         });
 

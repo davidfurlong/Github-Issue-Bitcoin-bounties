@@ -40,6 +40,9 @@ define(["common",
         $('#searchIssues').keyup(function(){
             searchIssues($('#searchIssues').val());
         });
+        $('#searchIssues').change(function(){
+            searchIssues($('#searchIssues').val());
+        });
 
         function searchIssues(query){
             // show all issues

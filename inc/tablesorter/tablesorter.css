@@ -12,7 +12,7 @@ table.tablesorter {
 table.tablesorter thead tr th, table.tablesorter tfoot tr th {
 	background-color: #eee;
 	font-size: 10pt;
-	padding: 10px;
+	padding:10px 20px 10px 10px;
 	border-right:1px solid white;
 }
 table.tablesorter tbody tr{

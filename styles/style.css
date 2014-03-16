@@ -17,16 +17,22 @@ body {
 	padding-left:0px;
 	font-size:25pt;
 	//text-shadow: 1px 1px 0px #ccc;
+	margin-right:50px;
 }
 
 .navbar {
 	background:transparent;
 	padding-top:15px;
+	//background:#8e12db;
 }
 
 .navbar .container-fluid, .navbar {
 	border-top-right-radius: 0px;
 	border-top-left-radius: 0px;
+}
+
+.navbar .navbar-nav {
+	margin-right:-30px !important;
 }
 
 addBountyBtn {
@@ -94,6 +100,12 @@ footer .row span {
 
 #create-bounty input {
 	outline:none !important;
+}
+#claim-bounty:hover {
+	margin-top:6px !important;
+}
+#add-bounty:hover {
+	margin-top:8px !important;
 }
 
 /*Opera Fix*/
