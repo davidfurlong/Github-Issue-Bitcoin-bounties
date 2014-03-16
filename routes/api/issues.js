@@ -146,7 +146,7 @@ exports.claimBountyCallback = function(req, res){
 		})
 	});
 
-	res.send(500, "Shit")
+	res.send(500, "Waiting for GitHub issue close confirmation...")
 }
 
 
