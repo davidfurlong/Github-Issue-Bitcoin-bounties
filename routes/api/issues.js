@@ -110,7 +110,9 @@ exports.getBounty = function(req, res){
 }
 
 exports.claimBounty = function(req, res){
-	res.redirect("https://github.com/login/oauth/authorize?client_id=" + process.env.GITHUBID);
+	var uri = "https://github.com/login/oauth/authorize?client_id=" + 
+		process.env.GITHUBID + "&redirect_uri=https://git-spur.herokuapp.com/oauth/callback?issueId=" + req.query.issueId;
+	res.redirect(uri);
 }
 
 exports.claimBountyCallback = function(req, res){
@@ -123,20 +125,20 @@ exports.claimBountyCallback = function(req, res){
 		},
 	}
 
+	var issueId = req.query.issueId;
+
 	console.log(options);
 
 	Request.post("https://github.com/login/oauth/access_token", options, function(err, response, body){
 		console.log("ACCESS TOKEN! " + body.access_token)
 		console.log(response)
 		console.log(body)
-		Issue.find(body.issueId).then(function(issue){
+		Issue.find(issueId).then(function(issue){
 			oauth = body.access_token
 			repoRequest = {json:true, data:{"Authorization":"token "+oauth}};
 			url = "https://api.github.com/repo/" + issue.user + "/" + issue.repo + "/issue/" + issue.issueNumber;
 			Request.get(url, repoRequest).then(function(issue){
-
 				console.log(issue.status);
-
 			});
 		})
 	});
