@@ -293,8 +293,8 @@ exports.block = function(req, res){
 		console.log(qr)
 
 		for(var i = 0; i < qr.length; i++) {
-			posturl("/confirms.php",{txid:qr['txid']}, function(error,conf) {
-				console.log(conf)
+			console.log(qr[i]);
+			posturl("/confirms.php",{txid:qr[i]['txid']}, function(error,conf) {
 				if(isInt(conf) && conf > 1) {
 					sequelize.transaction(function(t) {
 						qr.confirmed = true
