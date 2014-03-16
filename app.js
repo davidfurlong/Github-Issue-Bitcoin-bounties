@@ -62,6 +62,7 @@ app.get('/api/bounties/:bountyId', api.getBounty);
 app.post('/api/bounties/', api.addBounty);
 
 app.post('/api/transactions/', api.transactions);
+app.get('/api/listtransactions/', api.listtransactions);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {

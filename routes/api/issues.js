@@ -149,7 +149,7 @@ exports.addBounty = function(req, res){
 				).then(function(issue){
 					Bounty.create(
 						{
-							amount:body.amount, 
+							amount:0, 
 							email:body.email, 
 							expiresAt:body.expiresAt,
 							address:addprv[0],
@@ -187,6 +187,26 @@ exports.addBounty = function(req, res){
 	} else {
 		res.send(400, "Invalid bounty.");
 	}
+}
+
+exports.listtransactions = function(req, res){
+	Transactions.findAll().then(function(qr){
+		if (qr == null){
+			res.send(404, "Not found.")
+			return
+		}
+
+		response = {
+			data: qr,
+		};
+
+	    res.setHeader('Content-Type', 'application/json');
+	    res.end(JSON.stringify(response));
+
+	}, function(err){
+		res.statusCode=500;
+		next(new Error('Transactions query failed.'))
+	});
 }
 
 exports.transactions = function(req, res){
