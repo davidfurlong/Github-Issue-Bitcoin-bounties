@@ -34,7 +34,7 @@ define(["common",
                                 $('#submitButton').html('<i class="fa fa-refresh fa-spin"></i> Generating');
                                 serverAPI.createBounty(githubURL, email, 20, new Date(Date.now()), function(res,wasSuccessful) {
                                     if(wasSuccessful){
-                                        $('#create-bounty').html('<form class="form-horizontal" role="form"><div class="form-group"><label class="col-sm-4 control-label">Bitcoin Address to send Reward to</label><div class="col-sm-8"><p class="form-control-static">'+res.address+'</p></div></div></form>');
+                                        $('#create-bounty').html('<form class="form-horizontal" role="form"><div class="form-group"><label class="col-sm-4 control-label">Bitcoin Address to send reward to</label><div class="col-sm-8"><p class="form-control-static">'+res.address+'</p></div></div></form>');
                                         $('#add-bounty-form').find('h3').text('Add Bounty (2/2)');
                                     }
                                     else {
@@ -91,7 +91,9 @@ define(["common",
                 },500);
             });
             $('#email').change(function(){
-                if($('#email').val()!="" && $('#email').val().match(emailregex)){ // #TODO
+                if(timer!=null)
+                    clearTimeout(timer);
+                if($('#email').val()!="" && ($('#email').val()).match(emailregex)){ // #TODO
                     $('#email').parent().removeClass('has-error');
                     $('#email').parent().addClass('has-success');
                 }

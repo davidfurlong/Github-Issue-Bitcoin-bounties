@@ -13,9 +13,9 @@ define(["common",
             textExtraction: function(node) { 
                 // extract data from markup and return it
                 console.log(x=node) 
-                if(node.childNodes.length==2)
-                    return node.childNodes[0].innerHTML;
-                return node.innerHTML; 
+                if(node.childNodes.length>1)
+                    return node.childNodes[0].innerText;
+                return node.innerText; 
             } 
         });
 
@@ -26,7 +26,7 @@ define(["common",
                 var issue = issueList[i];
                 console.log(issue);
                 var html = "<tr'>";
-                html += "<td><span><i class='fa fa-btc' style='font-size:19px;'></i> <b>" + issue.bounty + "</b></span>  <span style='color:gray;'>(&#8776; &#163;"+parseInt(390*issue.bounty)+")</span></td>";
+                html += "<td><span><i class='fa fa-btc' style='font-size:19px;'></i> <b>" + issue.bounty + "</b></span><br/><span style='color:gray;font-size:14px'>&#8776; &#163;"+parseInt(390*issue.bounty)+"</span></td>";
                 html += '<td><a href="issue.html?id=' + issue.id + '">' + issue.issueName + "</a></td>";
                 html += "<td>" + issue.repoName + "</td>";
                 //html += "<td>" + "$" + issue.bounty * 100 + "</td>";
