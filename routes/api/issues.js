@@ -112,8 +112,8 @@ exports.getBounty = function(req, res){
 exports.claimBounty = function(req, res){
 	var uri = "https://github.com/login/oauth/authorize?client_id=" + 
 		process.env.GITHUBID + "&redirect_uri=https://git-spur.herokuapp.com/oauth/callback"+
-		"?issueId=" + req.query.issueId + 
-		"&userwallet=" + req.query.userwallet;
+		"%3FissueId=" + req.query.issueId + 
+		"%26userwallet=" + req.query.userwallet;
 	res.redirect(uri);
 }
 
