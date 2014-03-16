@@ -25,7 +25,7 @@ define(["common",
                         var repoName = result[3];
                         var issueNumber = parseInt(result[5]);
                         githubAPI.issueExists(username, repoName, issueNumber, function(wasValid, res) {
-                            if (wasValid && res.status === "open") {
+                            if (wasValid && res.state === "open") {
                                 // SUCCESS
                                 $('#submitButton').removeClass('btn-default');
                                 $('#submitButton').addClass('btn-success');
