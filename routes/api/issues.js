@@ -142,9 +142,11 @@ exports.claimBountyCallback = function(req, res){
 			Request.get(url, repoRequest, function(err, response, issue){
 				console.log("Status: " + issue.state);
 				if(issue.state == "closed"){
+					console.log("Issue closed. Time to pay! !!!!!!!!!!!!")
 					payout(issue.id, req.query.userwallet);
 					res.send(200, "Thanks!")
 				} else {
+					console.log("Issue open!?. Cheat! !!!!!!!!!!!!")					
 					res.send(200, "Issue isn't closed! :(")
 				}
 			});
