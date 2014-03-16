@@ -113,7 +113,6 @@ function validateBounty(body){
 	//TODO
 	var valid = true;
 	valid &= (!!body.issueUri);
-	valid &= (!!body.amount);
 	valid &= (!!body.email);
 	valid &= (!!body.expiresAt);
 	return valid;
