@@ -18,10 +18,10 @@ define([
             url: requestURI
         })
         .done(function(result){
-            callback(true);
+            callback(true, result);
         })
         .fail(function(jqXHR, status) {
-            callback(false);
+            callback(false, null);
         })
     };
 

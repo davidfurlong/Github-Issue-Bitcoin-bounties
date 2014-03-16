@@ -13,7 +13,6 @@ define(["common",
                 e.preventDefault();
                 var githubURL = $("#url").val();
                 var email = $("#email").val();
-                var bounty = $("#bounty").val();
                 var expirationDate = $("#expirationDate").get(0).valueAsDate;
                 // Validate other fields first
                 if(!$('#email').parent().hasClass('has-error') && email!=""){
@@ -25,14 +24,14 @@ define(["common",
                         var username = result[1];
                         var repoName = result[3];
                         var issueNumber = parseInt(result[5]);
-                        githubAPI.issueExists(username, repoName, issueNumber, function(res) {
-                            if (res) {
+                        githubAPI.issueExists(username, repoName, issueNumber, function(wasValid, res) {
+                            if (wasValid && res.status === "open") {
                                 // SUCCESS
                                 $('#submitButton').removeClass('btn-default');
                                 $('#submitButton').addClass('btn-success');
                                 $('#url').parent().addClass('has-success');
                                 $('#submitButton').html('<i class="fa fa-refresh fa-spin"></i> Generating');
-                                serverAPI.createBounty(githubURL, email, 20, new Date(Date.now()), function(res,wasSuccessful) {
+                                serverAPI.createBounty(githubURL, email, new Date(expirationDate), function(res, wasSuccessful) {
                                     if(wasSuccessful){
                                         $('#create-bounty').html('<form class="form-horizontal" role="form"><div class="form-group"><label class="col-sm-4 control-label">Bitcoin Address to send reward to</label><div class="col-sm-8"><p class="form-control-static">'+res.address+'</p></div></div></form>');
                                         $('#add-bounty-form').find('h3').text('Add Bounty (2/2)');
@@ -42,6 +41,9 @@ define(["common",
                                         $('#submitButton').html('Proceed To Payment');
                                     }
                                 });
+                            } else if (wasValid) {
+                                $('#create-bounty').prepend('<div class="row"><div class="col-md-12"><div class="alert alert-danger">Issue not open</div></div></div>');
+                                $('#submitButton').html('Proceed To Payment');
                             } else {
                                 // FAILURE
                                 $('#url').parent().addClass('has-error');
@@ -50,8 +52,8 @@ define(["common",
                         });
                     } else {
                         // FAILURE
-                        $('#url').parent().addClass('has-error');
-                        $('#url').focus();
+                        $('#create-bounty').prepend('<div class="row"><div class="col-md-12"><div class="alert ">Invalid Issue URL</div></div></div>');
+                        $('#submitButton').html('Proceed To Payment');
                     }
                 }
                 else {
