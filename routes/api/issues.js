@@ -284,7 +284,7 @@ exports.block = function(req, res){
 			return
 		}
 		for(var i = 0; i < qr.length; i++) {
-			posturl("/confirms.php",{txid:qr['txid']}, function(conf) {
+			posturl("/confirms.php",{txid:qr['txid']}, function(error,conf) {
 				if(isInt(conf) && conf > 1) {
 					sequelize.transaction(function(t) {
 						qr.confirmed = true
@@ -361,7 +361,8 @@ function posturl(url,params,callback){
 	req.end();
 }
 
-var github_auth = new Buffer(process.env.GITHUB_TOKEN).toString('base64');
+if(process.env.GITHUB_TOKEN)
+	var github_auth = new Buffer(process.env.GITHUB_TOKEN).toString('base64');
 
 var github_options = {
 		json: true,
