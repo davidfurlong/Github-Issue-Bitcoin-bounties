@@ -116,17 +116,19 @@ exports.claimBounty = function(req, res){
 exports.claimBountyCallback = function(req, res){
 	var options = {
 		json:true,
-		data:{
+		body:{
 			client_id: process.env.GITHUBID,
 			client_secret: process.env.GITHUBSECRET,
 			code: req.query.code,
 		},
 	}
 
-	Request.post("https://github.com/login/oauth/access_token", options, function(response){
-		console.log("ACCESS TOKEN! " + response)
+	console.log(options);
+
+	Request.post("https://github.com/login/oauth/access_token", options, function(err, response, body){
+		console.log("ACCESS TOKEN! " + body.access_token)
 		Issue.find(req.body.issueId).then(function(issue){
-			oauth = response.access_token
+			oauth = body.access_token
 			repoRequest = {json:true, data:{"Authorization":"token "+oauth}};
 			url = "https://api.github.com/repo/" + issue.user + "/" + issue.repo + "/issue/" + issue.issueNumber;
 			Request.get(url, repoRequest).then(function(issue){
