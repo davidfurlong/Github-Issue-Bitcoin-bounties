@@ -25,15 +25,19 @@ define(["common",
                     var issueNumber = parseInt(result[5]);
                     api.issueExists(username, repoName, issueNumber, function(res) {
                         if (res) {
-                            // SUCCESS
+                            $('#submitButton').removeClass('btn-default');
+                            $('#submitButton').addClass('btn-success');
+                            $('#url').parent().addClass('has-success');
+                            $('#submitButton').html('<i class="fa fa-refresh fa-spin"></i> Generating');
                         } else {
-                            // FAIL
+                            $('#url').parent().addClass('has-error');
                         }
                     });
                 } else {
                     console.warn("failed");
                 }
             });
+            /*
             var timer=null;
             $('#url').keyup(function(){
                 if(timer!=null)
@@ -47,6 +51,7 @@ define(["common",
                     }
                 },500);
             });
+            */
             
             $('#bounty').keyup(function(){
                 if($('#bounty').val().match(/^-?\d*(\.\d+)?$/) && $('#bounty').val()!=""){ // #TODO
