@@ -34,9 +34,9 @@ define([
                 var repoName = datum.repo;
                 var uri = datum.uri;
                 var language = datum.language;
-                var bounty = datum.bounty;
+                var amount = parseInt(datum.amount);
                 var expiresAt = datum.expiresAt;
-                var issue = new Issue(id, issueName, repoName, uri, language, bounty, expiresAt);
+                var issue = new Issue(id, issueName, repoName, uri, language, amount, expiresAt);
                 issueList.push(issue);
                 console.log(issue);
             }
@@ -66,9 +66,9 @@ define([
             var repoName = datum.repo;
             var uri = datum.uri;
             var language = datum.language;
-            var bounty = datum.bounty;
+            var amount = parseInt(datum.amount);
             var expiresAt = datum.expiresAt;
-            var issue = new Issue(id, issueName, repoName, uri, language, bounty, expiresAt);
+            var issue = new Issue(id, issueName, repoName, uri, language, amount, expiresAt);
             console.log(issue);
             callback(issue);
         })
