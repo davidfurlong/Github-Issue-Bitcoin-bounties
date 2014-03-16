@@ -365,7 +365,7 @@ exports.block = function(req, res){
 									res.send(404, "Error, corresponding Issue not found.")
 									return
 								}
-								commentOnGithubIssue([qr3.user,qr3.repo,qr3.uri.substring(qr3.uri.lastIndexOf('/') + 1)], "A new bounty of " + (tra.amount / 10000000).toString() + "BTC has been added for this issue! View all bounties at: http://davidfurlong.github.io/Spur/issue.html?id=" + qr3.id, function(a,b) { })
+								commentOnGithubIssue([qr3.user,qr3.repo,qr3.uri.substring(qr3.uri.lastIndexOf('/') + 1)], "A new bounty of " + (tra.amount / 100000000).toString() + "BTC has been added for this issue! View all bounties at: http://davidfurlong.github.io/Spur/issue.html?id=" + qr3.id, function(a,b) { })
 								qr3.confirmedAmount = (new Number(qr3.confirmedAmount) + new Number(tra.amount)).toString();
 								qr3.save({transaction:t});
 								t.commit();
