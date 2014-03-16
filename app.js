@@ -44,6 +44,7 @@ app.param("issueId", /^\d+$/);
 app.param("bountyId", /^\d+$/);
 
 app.all('/api/*', function(req, res, next){
+  console.log("Setting Allow-Origin header.")
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET POST OPTIONS PUT");
   res.header("Access-Control-Allow-Headers", "X-Requested-With,content-type");
