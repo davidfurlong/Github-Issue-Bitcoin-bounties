@@ -46,9 +46,10 @@ app.param("bountyId", /^\d+$/);
 app.all('/api/*', function(req, res, next){
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET POST OPTIONS PUT");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With,content-type");
   next();
-})
+});
+
 app.get('/api/issues/', api.getIssues);
 app.get('/api/issues/:issueId', api.getIssue);
 
