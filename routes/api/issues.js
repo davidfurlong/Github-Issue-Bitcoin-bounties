@@ -136,7 +136,7 @@ exports.claimBountyCallback = function(req, res){
 			repoRequest = {json:true, headers: {"User-Agent": "EdShaw/gitspur",}, body:{"Authorization":"token "+oauth}};
 			url = "https://api.github.com/repo/" + issue.user + "/" + issue.repo + "/issue/" + issue.issueNumber;
 			Request.get(url, repoRequest, function(err, response, issue){
-				console.log("Status: " + issue);
+				console.log("Status: " + issue.status);
 			});
 		})
 	});
