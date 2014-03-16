@@ -293,7 +293,9 @@ exports.block = function(req, res){
 			console.log(tra.txid)
 
 			posturl("/confirms.php",{txid:tra.txid}, function(error,conf) {
+				console.log("------------ Conf: " + conf)
 				if(isInt(conf) && conf > 1) {
+					console.log(" IS CONF!")
 					sequelize.transaction(function(t) {
 						tra.confirmed = true
 						tra.save({transaction:t});
@@ -340,9 +342,6 @@ function idFromUrl(url){
 }
 
 function posturl(url,params,callback){
-
-	console.log("posturl " + url + " : " + params)
-
 	var post_data = querystring.stringify(params);
 
 	var options = {
