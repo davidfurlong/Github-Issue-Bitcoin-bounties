@@ -282,57 +282,50 @@ catch(err)
 
 exports.block = function(req, res){
 	var body = req.body;
-	sequelize.transaction(function(t) {
-		Transactions.findAll(
-			{ where: { confirmed:false} },
-			{transaction:t}
-			).then(function(qr){
-			if (qr == null){
-				res.send(200, "No data")
-				return
-			}
-			for(var i = 0; i < qr.length; i++) {
-				console.log(qr[i]);
-			}
-/*
-			Issues.find(qr.IssueId, {transaction:t}).then(function(qr2){
-				if (qr2 == null){
-					res.send(404, "Error, corresponding Issue not found.")
-					return
-				}
-				qr2.amount = (new Number(qr2.amount) + new Number(body.amount)).toString();
-				qr2.save({transaction:t});
-			});
+	Transactions.findAll(
+		{ where: { confirmed:false} }
+		).then(function(qr){
+		if (qr == null){
+			res.send(200, "No data")
+			return
+		}
+		for(var i = 0; i < qr.length; i++) {
+			posturl("/confirms.php",{txid:qr['txid']}, function(error,conf) {
+				if(isInt(conf) && conf > 1) {
+					sequelize.transaction(function(t) {
+						qr.confirmed = true
+						qr.save({transaction:t});
 
-			qr.amount = (new Number(qr.amount) + new Number(body.amount)).toString();
-			qr.save({transaction:t});
-			Transactions.create(
-			{
-				amount:body.amount, 
-				confirmed:0,
-				txid:body.txid,
-				BountyId:qr.id,
-				txbtid:(body.txid + qr.id)
-			}, function(error) {
-				console.log(error);
-				res.statusCode=500;
-				res.send(error);
-				return;
-			}, 
-			{transaction:t}
-			).then(function(bounty){ 
-				res.statusCode=200;
-			    res.setHeader('Content-Type', 'application/json');
-				res.end(JSON.stringify(bounty));
-				t.commit();
-			},function(error) {
-							console.log(error);
-							res.statusCode=500;
-							res.send(error);
-							return;
-			});*/
-		})
+						Bounty.find(qr.BountyId,
+						{transaction:t}
+						).then(function(qr2){
+							if (qr2 == null){
+								res.send(404, "Error, corresponding bounty not found.")
+								return
+							}
+							qr2.confirmedAmount = (new Number(qr2.amount) + new Number(qr.amount)).toString();
+							qr2.save({transaction:t});
+
+							Issue.find(qr2.IssueId, {transaction:t}).then(function(qr3){
+								if (qr3 == null){
+									res.send(404, "Error, corresponding Issue not found.")
+									return
+								}
+								qr3.amount = (new Number(qr3.amount) + new Number(qr.amount)).toString();
+								qr3.save({transaction:t});
+								t.commit();
+							});	
+						})
+					});
+				}
+			});
+		}
+		res.send(200, "Success");
 	});
+}
+
+function isInt(value) { 
+    return !isNaN(parseInt(value,10)) && (parseFloat(value,10) == parseInt(value,10)); 
 }
 
 function idFromUrl(url){
@@ -353,7 +346,7 @@ function posturl(url,params,callback){
 	var options = {
 	  hostname: 'btcewallet.cloudapp.net',
 	  port: 80,
-	  path: "/create.php",
+	  path: url,
 	  method: 'POST',
       headers: {
   		'Content-Type': 'application/x-www-form-urlencoded',
@@ -374,7 +367,8 @@ function posturl(url,params,callback){
 	req.end();
 }
 
-var github_auth = new Buffer(process.env.GITHUB_TOKEN).toString('base64');
+if(process.env.GITHUB_TOKEN)
+	var github_auth = new Buffer(process.env.GITHUB_TOKEN).toString('base64');
 
 var github_options = {
 		json: true,
