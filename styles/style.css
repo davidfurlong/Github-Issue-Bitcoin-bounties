@@ -19,6 +19,7 @@ body {
 	//text-shadow: 1px 1px 0px #ccc;
 	margin-right:50px;
 	padding-top:0px;
+	margin-left:0px;
 }
 
 .navbar {
@@ -127,4 +128,28 @@ body:before {
 .navbar {
 	border:0px;
 	border-radius:0px;
+}
+
+.fbtn {
+  display: block;
+  border: none;
+  margin: 0px auto;
+  width: 250px;
+  color:#FFF;
+  font-size: 18px;
+  font-weight: normal;
+  line-height: 1.5;
+  border-radius: 6px;
+  padding: 10px 19px;
+  background-color: #34495e;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -webkit-transition: border .25s linear, color .25s linear, background-color .25s linear;
+  transition: border .25s linear, color .25s linear, background-color .25s linear;
+}
+.fbtn:hover,
+.fbtn:focus {
+	background-color: #415b76;
+	text-decoration: none;
+  outline: none;
+  color: #ffffff;
 }
