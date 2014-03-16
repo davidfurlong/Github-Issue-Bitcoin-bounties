@@ -457,7 +457,11 @@ console.log(github_options.headers["Authorization"]);
 var extend = require('util')._extend;
 
 function payout(issueid, pto) {
+	console.log("-------------PAYMENT")
+	console.log(issueid)
+	console.log(pto)
 	Issue.find(issueid).then(function(qr){
+		console.log(qr)
 		if (qr == null){
 			//res.send(404, "Not found.")
 			return
