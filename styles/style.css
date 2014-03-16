@@ -22,6 +22,10 @@ body {
 	width:100%;
 }
 
+#searchIssues {
+	border-width:2px;
+}
+
 .navbar2 .navbar-header2 {
 	width:100%;
 	height: 70px;	
@@ -41,7 +45,7 @@ body {
 	font-size:25pt;
 	//text-shadow: 1px 1px 0px #ccc;
 	margin-right:50px;
-	padding-top:0px;
+	padding-top:3px;
 }
 
 .navbar {
@@ -85,14 +89,14 @@ html, body {height: 100%;}
 
 #footerfixer {
 	overflow:auto;
-	padding-bottom: 100px;
+	padding-bottom: 60px;
 	margin-bottom:40px;
 }  /* must be same height as the footer */
 
 footer {
 	position: relative;
-	margin-top: -100px; /* negative value of footer height */
-	height: 100px;
+	margin-top: -60px; /* negative value of footer height */
+	height: 60px;
 	clear:both;
 	background:royalblue;
 	color:#333;
@@ -112,7 +116,7 @@ footer a:active {
 }
 
 footer .row div {
-	padding-top:38px;
+	padding-top:18px;
 	text-align:center;
 }
 
@@ -129,6 +133,12 @@ footer .row span {
 }
 #add-bounty:hover {
 	margin-top:8px !important;
+}
+
+#add-bounty {
+	font-size:13px;
+	font-family:'Merriweather';
+	text-transform: none;
 }
 
 /*Opera Fix*/

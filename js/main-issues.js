@@ -58,14 +58,17 @@ define(["common",
             // remove common words
             var terms = query.trim().toLowerCase().replace(/\b(?:(the)|(it)|(is)|(we)|(all)|(a)|(an)|(by)|(to)|(you)|(me)|(he)|(she)|(they)|(we)|(how)|(it)|(i)|(are)|(to)|(for)|(of)|(with))\b/ig, '').replace(',',' ').replace('.',' ');
             terms = terms.split(' ');
+            console.log(terms);
 
             //TODO hide certain issues
             var isMatch = false;
             for(var i=0;i<x.length;i++){
+                console.log(x[i].childNodes);
+
                 isMatch = false;
-                var t = $(x[i].children[0]).text() + " " + $(x[i].children[1]).text()+ " "+$(x[i].children[2]).text();
+                var t = $(x[i].children[0]).text() + " " + $(x[i].children[1]).text()+ " "+$(x[i].children[2]).text()+$(x[i].children[3]).text();
                 t = t.toLowerCase();
-                var l = $(x[i].children[2]).text();
+                var l = $(x[i].children[3]).text();
                 l = l.toLowerCase();
 
                 /* Unnecessary
