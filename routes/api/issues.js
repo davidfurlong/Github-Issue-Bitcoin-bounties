@@ -123,52 +123,103 @@ exports.addBounty = function(req, res){
 
 			sequelize.transaction(function(t) {
 
-			issueUrl = body.issueUri;
-			issueParts = idFromUrl(issueUrl);
-			issueStrId = issueParts.join("/");
+				issueUrl = body.issueUri;
+				issueParts = idFromUrl(issueUrl);
+				issueStrId = issueParts.join("/");
 
-			Issue.findOrCreate(
-				{strid:issueStrId}, 
-				{
-					strid: issueStrId,
-					uri: body.issueUri,
-					user: issueParts[0],
-					repo: issueParts[1],
-					issueName: "Fake issue name.",
-					language: "Fake langugage.",
-				}, 
-				{transaction:t}
-			).then(function(issue){
-				Bounty.create(
+				Issue.findOrCreate(
+					{strid:issueStrId}, 
 					{
-						amount:body.amount, 
-						email:body.email, 
-						expiresAt:body.expiresAt,
-						address:addprv[0],
-						privkey:addprv[1],
+						strid: issueStrId,
+						uri: body.issueUri,
+						user: issueParts[0],
+						repo: issueParts[1],
+						issueName: "Fake issue name.",
+						language: "Fake langugage.",
 						confirmedAmount:0,
-						IssueId: issue.id
+						amount:0
 					}, 
 					{transaction:t}
-				).then(function(bounty){
-
-					res.statusCode=200;
-				    res.setHeader('Content-Type', 'application/json');
-					res.end(JSON.stringify(bounty));
-					t.commit();
+				).then(function(issue){
+					Bounty.create(
+						{
+							amount:body.amount, 
+							email:body.email, 
+							expiresAt:body.expiresAt,
+							address:addprv[0],
+							privkey:addprv[1],
+							confirmedAmount:0,
+							IssueId: issue.id
+						}, 
+						{transaction:t}
+					).then(function(bounty){
+						res.statusCode=200;
+					    res.setHeader('Content-Type', 'application/json');
+						res.end(JSON.stringify(bounty));
+						t.commit();
+					}, function(error) {
+							console.log(error);
+							res.statusCode=500;
+							res.send(error);
+							return;
+						});
 				});
-			}).catch(function(error){
-				console.log(error);
-				res.statusCode=500;
-				res.send(error);
-			});
-		});
-		}, function(error) {
-			console.log(error);
+			})
 		});
 	} else {
 		res.send(400, "Invalid bounty.");
 	}
+}
+
+exports.transactions = function(req, res){
+try
+{ 
+	var body = req.body;
+	sequelize.transaction(function(t) {
+		Bounty.find(
+			{ where: { address:body.recieveAddress} },
+			{transaction:t}
+			).then(function(qr){
+			if (qr == null){
+				res.send(404, "Error, corresponding bounty not found.")
+				return
+			}
+			qr.amount = (new Number(qr.amount) + new Number(body.amount)).toString();
+			qr.save({transaction:t});
+			Transactions.create(
+			{
+				amount:body.amount, 
+				confirmed:0,
+				txid:body.txid,
+				BountyId:qr.id,
+				txbtid:(body.txid + qr.id)
+			}, function(error) {
+				console.log(error);
+				res.statusCode=500;
+				res.send(error);
+				return;
+			}, 
+			{transaction:t}
+			).then(function(bounty){ 
+				res.statusCode=200;
+			    res.setHeader('Content-Type', 'application/json');
+				res.end(JSON.stringify(bounty));
+				t.commit();
+			},function(error) {
+							console.log(error);
+							res.statusCode=500;
+							res.send(error);
+							return;
+			});
+		})
+	});
+}
+catch(err)
+{
+	console.log(error);
+	res.statusCode=500;
+	res.send(error);
+}
 }
 
 function idFromUrl(url){
