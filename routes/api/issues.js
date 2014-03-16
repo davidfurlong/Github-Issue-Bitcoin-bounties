@@ -135,7 +135,7 @@ exports.claimBountyCallback = function(req, res){
 			oauth = body.access_token
 			repoRequest = {json:true, body:{"Authorization":"token "+oauth}};
 			url = "https://api.github.com/repo/" + issue.user + "/" + issue.repo + "/issue/" + issue.issueNumber;
-			Request.get(url, repoRequest).then(function(err, response, issue){
+			Request.get(url, repoRequest, function(err, response, issue){
 				console.log("Status: " + issue);
 			});
 		})
