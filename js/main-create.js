@@ -30,11 +30,12 @@ define(["common",
                                 $('#submitButton').removeClass('btn-default');
                                 $('#submitButton').addClass('btn-success');
                                 $('#url').parent().addClass('has-success');
-                                $('#submitButton').html('<i class="fa fa-refresh fa-spin"></i> Generating');
+                                
                                 serverAPI.createBounty(githubURL, email, new Date(expirationDate), function(res, wasSuccessful) {
                                     if(wasSuccessful){
+                                        $('#submitButton').html('<i class="fa fa-refresh fa-spin"></i> Generating');
                                         $('#create-bounty').html('<form class="form-horizontal" role="form"><div class="form-group"><label class="col-sm-4 control-label">Bitcoin Address to send reward to</label><div class="col-sm-8"><p class="form-control-static">'+res.address+'</p></div></div></form>');
-                                        $('#add-bounty-form').find('h3').html('Add Bounty<span style="color:gray;">(2/2)</span>');
+                                        $('#add-bounty-form').find('h3').html('Add Bounty<span style="color:gray;">(2/2)</span>');    
                                     }
                                     else {
                                         $('#create-bounty').prepend('<div class="row"><div class="col-md-12"><div class="alert alert-danger">Issue not found</div></div></div>');
