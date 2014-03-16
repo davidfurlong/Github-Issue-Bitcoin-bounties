@@ -113,6 +113,30 @@ define([
         });
     };
 
-    
+    ServerAPI.prototype.createBounty = function(issueURL, email, amount, expiresAt, callback) {
+        var data = {};
+        data.issueUri = issueURL;
+        data.amount = amount;
+        data.email = email;
+        data.expiresAt = expiresAt;
+
+        var postURL = this.SERVER_URI;
+        postURL += this.BOUNTIES_EXT;
+        console.log(data);
+        $.ajax({
+            url: postURL,
+            data: data,
+            type: "POST",
+        })
+        .done(function(result, status, jqXHR){
+            console.log(result);
+            callback(true);
+        })
+        .fail(function(jqXHR, status) {
+            console.log(status);
+            callback(false);
+        });
+    };
+
     return ServerAPI;
 });
