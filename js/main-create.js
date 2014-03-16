@@ -7,6 +7,7 @@ define(["common",
         "github/GitHubAPI",
     ], function($, bootstrap, ServerAPI, GitHubAPI) {
         $(function() {
+            $('#url').focus();
             var serverAPI = new ServerAPI();
             $("#submitButton").click(function(e) {
                 e.preventDefault();
