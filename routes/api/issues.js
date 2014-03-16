@@ -135,7 +135,7 @@ exports.claimBountyCallback = function(req, res){
 			oauth = body.access_token
 			repoRequest = {json:true, headers: {"User-Agent": "EdShaw/gitspur",}, body:{"Authorization":"token "+oauth}};
 			issueNumber = issue.strid.split("/")[2];
-			url = "https://api.github.com/repos/" + issue.user + "/" + issue.repo + "/issue/" + issueNumber;
+			url = "https://api.github.com/repos/" + issue.user + "/" + issue.repo + "/issues/" + issueNumber;
 			console.log(url)
 			Request.get(url, repoRequest, function(err, response, issue){
 				console.log("Status: " + issue);
