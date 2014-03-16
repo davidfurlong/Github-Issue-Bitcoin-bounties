@@ -109,6 +109,41 @@ exports.getBounty = function(req, res){
 	});
 }
 
+exports.claimBounty = function(req, res){
+	var uri = "https://github.com/login/oauth/authorize?client_id=" + 
+		process.env.GITHUBID + "&redirect_uri=https://git-spur.herokuapp.com/oauth/callback?issueId=" + req.query.issueId;
+	res.redirect(uri);
+}
+
+exports.claimBountyCallback = function(req, res){
+	var options = {
+		json:true,
+		body:{
+			client_id: process.env.GITHUBID,
+			client_secret: process.env.GITHUBSECRET,
+			code: req.query.code,
+		},
+	}
+
+	var issueId = req.query.issueId;
+
+	console.log(options);
+
+	Request.post("https://github.com/login/oauth/access_token", options, function(err, response, body){
+		console.log("ACCESS TOKEN! " + body.access_token)
+		Issue.find(issueId).then(function(issue){
+			oauth = body.access_token
+			repoRequest = {json:true, headers: {"User-Agent": "EdShaw/gitspur",}, body:{"Authorization":"token "+oauth}};
+			url = "https://api.github.com/repo/" + issue.user + "/" + issue.repo + "/issue/" + issue.issueNumber;
+			Request.get(url, repoRequest, function(err, response, issue){
+				console.log("Status: " + issue.status);
+			});
+		})
+	});
+
+	res.send(500, "Shit")
+}
+
 
 function validateBounty(body){
 	//TODO
@@ -141,6 +176,7 @@ exports.addBounty = function(req, res){
 					res.send(error); 
 					return;
 				} else if (issue.status != "open"){
+					console.log("Issue status: " + issue.status)
 					res.statusCode=400;
 					res.send("Issue already closed.")
 				}

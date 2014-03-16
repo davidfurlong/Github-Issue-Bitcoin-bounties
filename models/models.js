@@ -17,6 +17,7 @@ Issue = sequelize.define('Issue', {
   strid: {type: Sequelize.STRING, unique: true},
   user: {type: Sequelize.STRING, allowNull: false},
   repo: {type: Sequelize.STRING, allowNull: false},
+  issueNumber: {type: Sequelize.STRING, allowNull: false},
   issueName: {type: Sequelize.STRING, allowNull: false},
   language: {type: Sequelize.STRING, allowNull: false, defaultValue: "Unknown"},
   uri: Sequelize.STRING,
