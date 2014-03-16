@@ -141,7 +141,15 @@ exports.addBounty = function(req, res){
 					res.send(error);
 					return;
 				}
-				var addprv = wallet.split("\n")
+				var addprv = wallet.split("\n");
+
+				var date = new Date(body.expiresAt);
+				if(date instanceof Date && !isNaN(date.valueOf())){
+					//Date is a date :)
+				} else {
+					date=null;
+				}
+				console.log(date)
 				sequelize.transaction(function(t) {
 					Issue.findOrCreate(
 						{strid:issueStrId}, 
@@ -152,12 +160,17 @@ exports.addBounty = function(req, res){
 							repo: issueParts[1],
 							issueName: issue.title,
 							language: repo.language?repo.language:"Unknown",
+							expiresAt: body.expiresAt,
 							confirmedAmount:0,
 							amount:0,
 							payoutToken:randomString(32,'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'),
 						}, 
 						{transaction:t}
 					).then(function(issue){
+
+						issue.expiresAt = new Date(Math.max.apply(null,[issue.expiresAt, date]))
+						issue.save();
+
 						Bounty.create(
 							{
 								amount:0, 
@@ -290,18 +303,19 @@ exports.block = function(req, res){
 			res.send(200, "No data")
 			return
 		}
+		qr.forEach(function(tra, i, a){
+			console.log("Tra: " + tra)
+			console.log("txid" + tra.txid)
 
-		console.log(qr)
-
-		for(var i = 0; i < qr.length; i++) {
-			posturl("/confirms.php",{txid:qr['txid']}, function(error,conf) {
-				console.log(conf)
+			posturl("/confirms.php",{txid:tra.txid}, function(error,conf) {
+				console.log("------------ Conf: " + conf)
 				if(isInt(conf) && conf > 1) {
+					console.log(" IS CONF!")
 					sequelize.transaction(function(t) {
-						qr.confirmed = true
-						qr.save({transaction:t});
+						tra.confirmed = true
+						tra.save({transaction:t});
 
-						Bounty.find(qr.BountyId,
+						Bounty.find(tra.BountyId,
 						{transaction:t}
 						).then(function(qr2){
 							if (qr2 == null){
@@ -325,7 +339,7 @@ exports.block = function(req, res){
 					});
 				}
 			});
-		}
+		})
 		res.send(200, "Success");
 	});
 }
@@ -350,10 +364,9 @@ function idFromUrl(url){
 }
 
 function posturl(url,params,callback){
-
-	console.log("posturl")
-
 	var post_data = querystring.stringify(params);
+	console.log("-------------------------------")
+	console.log("Post: " + post_data);
 
 	var options = {
 	  hostname: 'btcewallet.cloudapp.net',
@@ -361,9 +374,9 @@ function posturl(url,params,callback){
 	  path: url,
 	  method: 'POST',
       headers: {
-  		'Content-Type': 'application/json',
+  		'Content-Type': 'application/x-www-form-urlencoded',
   		'Content-Length': post_data.length
-	  }
+	  },
 	};
 
 	var req = http.request(options, function(res) {
@@ -427,7 +440,7 @@ function getGithubIssue(issueParts, callback){
 			callback(err, body);
 		} else {
 			console.log("Error: "+err);
-			callback("Issue Failure")
+			callback("GitHub Issue Failure")
 		}
 	});
 }
@@ -439,7 +452,7 @@ function getGithubRepo(issueParts, callback){
 			callback(err, body);
 		} else {
 			console.log("Error: "+err);
-			callback("Bounty Failure")
+			callback("GitHub Bounty Failure")
 		}
 	});
 }
