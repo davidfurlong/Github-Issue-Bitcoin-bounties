@@ -162,6 +162,10 @@ exports.addBounty = function(req, res){
 				    res.setHeader('Content-Type', 'application/json');
 					res.end(JSON.stringify(bounty));
 					t.commit();
+				}).catch(function(error){
+					console.log(error);
+					res.statusCode=500;
+					res.send(error);
 				});
 			}).catch(function(error){
 				console.log(error);
