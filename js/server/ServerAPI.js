@@ -113,12 +113,12 @@ define([
         });
     };
 
-    ServerAPI.prototype.createBounty = function(issueURL, email, amount, expiresAt, callback) {
+    ServerAPI.prototype.createBounty = function(issueURL, email, amount, expiresDate, callback) {
         var data = {};
         data.issueUri = issueURL;
         data.amount = amount;
         data.email = email;
-        data.expiresAt = expiresAt;
+        data.expiresAt = expiresDate.toISOString();
 
         var postURL = this.SERVER_URI;
         postURL += this.BOUNTIES_EXT;
@@ -133,6 +133,8 @@ define([
             callback(true);
         })
         .fail(function(jqXHR, status) {
+            console.log("FAIL");
+            console.log(jqXHR);
             console.log(status);
             callback(false);
         });

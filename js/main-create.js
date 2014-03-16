@@ -32,16 +32,15 @@ define(["common",
                             $('#submitButton').addClass('btn-success');
                             $('#url').parent().addClass('has-success');
                             $('#submitButton').html('<i class="fa fa-refresh fa-spin"></i> Generating');
-                            serverAPI.createBounty(githubURL, email, 20, Date.now(), function(wasSuccessful) {
+                            serverAPI.createBounty(githubURL, email, 20, new Date(Date.now()), function(wasSuccessful) {
                                 console.log(wasSuccessful);
                             });
                         } else {
-                            console.warn("Fail");
                             $('#url').parent().addClass('has-error');
                         }
                     });
                 } else {
-                    console.warn("failed");
+                    $('#url').parent().addClass('has-error');
                 }
             });
             /*
