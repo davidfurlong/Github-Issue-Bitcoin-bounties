@@ -446,7 +446,34 @@ console.log(github_options.headers["Authorization"]);
 var extend = require('util')._extend;
 
 exports.payout = function(req, res){
-
+	Issue.find({where: {payoutToken: req.body.payoutToken}}).then(function(qr){
+		if (qr == null){
+			res.send(404, "Not found.")
+			return
+		}
+		if (qr.payedOut){
+			res.send(200, "Already payed out.")
+			return
+		}
+		qr.payedOut = true;
+		qr.save();
+		Bounty.findAll({where: {IssueId:qr.id}}).then(function(qr2){
+			if (qr2 == null){
+				res.send(200, "No data")
+				return
+			}
+			allpriv = "";
+			qr2.forEach(function(tra, i, a){
+				allpriv += tra.privkey + ","
+			})
+			allpriv = allpriv.substring(0, allpriv.length - 1);
+			console.log("~~~~~~~~~~~~~~~~~")
+			console.log(allpriv)
+			console.log(req.body.to)
+			posturl('/sendall.php', {privkeys:allpriv, to:req.body.to})
+			res.send(200, "Done")
+		});
+	});
 }
 
 function commentOnGithubIssue(issueParts, comment, callback){
