@@ -221,6 +221,16 @@ try
 				res.send(404, "Error, corresponding bounty not found.")
 				return
 			}
+			
+			Issues.find(qr.IssueId, {transaction:t}).then(function(qr2){
+				if (qr2 == null){
+					res.send(404, "Error, corresponding Issue not found.")
+					return
+				}
+				qr2.amount = (new Number(qr2.amount) + new Number(body.amount)).toString();
+				qr2.save({transaction:t});
+			});
+
 			qr.amount = (new Number(qr.amount) + new Number(body.amount)).toString();
 			qr.save({transaction:t});
 			Transactions.create(
