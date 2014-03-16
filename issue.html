@@ -48,7 +48,13 @@
           <div class="row">
             <div class="col-md-12">
               <h2 id="name-text" class="text-info" style="padding-top:0px;margin-top:0px"></h2>
-              <button type="submit" id="claim-bounty" class="btn btn-default" style="margin-top:5px">Claim Bounty</button>
+              <form role="form" style="margin-top:20px">
+                <div class="form-group">
+                  <input type="email" class="form-control" id="bcaddress" placeholder="Enter Bitcoin Address">
+                </div>
+                <button type="submit" id="claim-bounty" class="btn btn-default" style="margin-top:5px">Claim Bounty</button>
+              </form>
+              
               <table id="bounty-list" class="tablesorter"> 
                 <thead> 
                   <tr> 

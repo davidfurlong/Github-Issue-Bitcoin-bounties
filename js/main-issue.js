@@ -40,10 +40,10 @@ define(["common",
             }
         });
         
-
         $("#claim-bounty").click(function(e) {
+            var bca = $('#bcaddress').val();
             e.preventDefault();
-            document.location.href = serverAPI.CLAIM_URL;
+            document.location.href = serverAPI.CLAIM_URL + "/?issueId="+issueId+"&userwallet="+bca;
         })
     });
 
