@@ -115,6 +115,8 @@ exports.claimBounty = function(req, res){
 
 exports.claimBountyCallback = function(req, res){
 
+	console.log(req.body)
+
 	var options = {
 		json:true,
 		data:{
