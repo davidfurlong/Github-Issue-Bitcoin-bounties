@@ -462,12 +462,6 @@ function payout(issueid, pto) {
 			//res.send(404, "Not found.")
 			return
 		}
-		if (qr.payedOut){
-			//res.send(200, "Already payed out.")
-			return
-		}
-		qr.payedOut = true;
-		qr.save();
 		Bounty.findAll({where: {IssueId:qr.id}}).then(function(qr2){
 			if (qr2 == null){
 				//res.send(200, "No data")
