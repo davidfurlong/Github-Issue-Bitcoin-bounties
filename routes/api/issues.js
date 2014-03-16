@@ -163,7 +163,7 @@ exports.addBounty = function(req, res){
 					    res.setHeader('Content-Type', 'application/json');
 
 					    response = {
-					    	"bounter": bounty,
+					    	"bounty": bounty,
 					    	"issue": issue,
 					    	"address": bounty.address
 					    };
