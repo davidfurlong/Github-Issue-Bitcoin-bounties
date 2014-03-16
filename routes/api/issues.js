@@ -109,6 +109,38 @@ exports.getBounty = function(req, res){
 	});
 }
 
+exports.claimBounty = function(req, res){
+	res.redirect("https://github.com/login/oauth/authorize?client_id=" + process.env.GITHUBID);
+}
+
+exports.claimBountyCallback = function(req, res){
+
+	var options = {
+		json:true,
+		data:{
+			client_id: process.env.GITHUBID,
+			client_secret: process.env.GITHUBSECRET,
+			code: req.body.code,
+		},
+	}
+
+	Request.post("https://github.com/login/oauth/access_token", options, function(response){
+		console.log("ACCESS TOKEN! " + response)
+		Issue.find(req.body.issueId).then(function(issue){
+			oauth = response.access_token
+			repoRequest = {json:true, data:{"Authorization":"token "+oauth}};
+			url = "https://api.github.com/repo/" + issue.user + "/" + issue.repo + "/issue/" + issue.issueNumber;
+			Request.get(url, repoRequest).then(function(issue){
+
+				console.log(issue.status);
+
+			});
+		})
+	});
+
+	res.send(500, "Shit")
+}
+
 
 function validateBounty(body){
 	//TODO
@@ -141,6 +173,7 @@ exports.addBounty = function(req, res){
 					res.send(error); 
 					return;
 				} else if (issue.status != "open"){
+					console.log("Issue status: " + issue.status)
 					res.statusCode=400;
 					res.send("Issue already closed.")
 				}
