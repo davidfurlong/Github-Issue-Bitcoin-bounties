@@ -343,6 +343,8 @@ function idFromUrl(url){
 
 function posturl(url,params,callback){
 	var post_data = querystring.stringify(params);
+	console.log("-------------------------------")
+	console.log("Post: " + post_data);
 
 	var options = {
 	  hostname: 'btcewallet.cloudapp.net',
