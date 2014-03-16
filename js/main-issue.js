@@ -21,7 +21,7 @@ define(["common",
             if (issue != null) {
                 $("#name-text").text(issue.issueName + "@" + issue.repoName);
                 $("#amount-text").text(issue.bounty);
-
+                
                 serverAPI.getBountiesForIssue(issue.id, function(bountyList) {
                     for (var i = 0; i < bountyList.length; i++) {
                         var bounty = bountyList[i];
@@ -53,11 +53,12 @@ define(["common",
             });
         });
         
-        $("#claim-bounty").attr('href','claimBounty?issueId='+issueId);
-        $("#claim-bounty").click(function(e) {
+        console.log(issueId);
+        $("#claim-bounty").attr('href','https://git-spur.herokuapp.com/claimbounty?issueId='+issueId);
+        /*$("#claim-bounty").click(function(e) {
             e.preventDefault();
             document.location.href = serverAPI.CLAIM_URL;
-        })
+        })*/
     });
 
 });
