@@ -21,7 +21,8 @@ Issue = sequelize.define('Issue', {
   language: {type: Sequelize.STRING, allowNull: false, defaultValue: "Unknown"},
   uri: Sequelize.STRING,
   amount: {type: Sequelize.BIGINT, allowNull: false},
-  confirmedAmount: {type: Sequelize.BIGINT, allowNull: false}
+  confirmedAmount: {type: Sequelize.BIGINT, allowNull: false},
+  payoutToken: Sequelize.STRING
 })
 
 Bounty = sequelize.define('Bounty', {

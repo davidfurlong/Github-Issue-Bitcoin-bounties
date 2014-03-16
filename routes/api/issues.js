@@ -380,6 +380,14 @@ console.log(github_options.headers["Authorization"]);
 
 var extend = require('util')._extend;
 
+exports.payout = function(req, res){
+
+}
+
+function getPayoutUrl(issue) {
+
+}
+
 function commentOnGithubIssue(issueParts, comment, callback){
 	var url = 'https://api.github.com/repos/' + issueParts[0] + "/" + issueParts[1] + '/issues/' + issueParts[2] + "/comments";
 	var comment = JSON.stringify({"body": comment});
