@@ -30,7 +30,6 @@ define(["common",
                     var username = result[1];
                     var repoName = result[3];
                 }
-                console.log(issue);
                 var html = "<tr'>";
                 html += "<td><span><i class='fa fa-btc' style='font-size:19px;'></i> <b>" + (issue.bounty/100000000) + "</b></span><br/><span style='color:gray;font-size:14px'>&#8776; &#163;"+(390*(issue.bounty/100000000)).toFixed(2)+"</span></td>";
                 html += '<td><a href="issue.html?id=' + issue.id + '">' + issue.issueName + "</a></td>";
