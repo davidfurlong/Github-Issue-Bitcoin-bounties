@@ -7,16 +7,16 @@ define(["common",
         "tablesorter",
         "server/ServerAPI"
     ], function($, bootstrap, tablesorter, ServerAPI) {
-        
         $("#issue-list").tablesorter({ 
             // define a custom text extraction function 
             textExtraction: function(node) { 
                 // extract data from markup and return it
-                console.log(x=node) 
                 if(node.childNodes.length>1)
-                    return node.childNodes[0].innerText;
+                    return node.childNodes[0].childNodes[1].innerText;
                 return node.innerText; 
-            } 
+            },
+            debug:true,
+            //headers: { 0: { sorter: false}, 4: {sorter: false} }
         });
 
         var serverAPI = new ServerAPI();
@@ -26,7 +26,7 @@ define(["common",
                 var issue = issueList[i];
                 console.log(issue);
                 var html = "<tr'>";
-                html += "<td><span><i class='fa fa-btc' style='font-size:19px;'></i> <b>" + issue.bounty + "</b></span><br/><span style='color:gray;font-size:14px'>&#8776; &#163;"+parseInt(390*issue.bounty)+"</span></td>";
+                html += "<td><span><i class='fa fa-btc' style='font-size:19px;'></i> <b>" + (issue.bounty/100000000) + "</b></span><br/><span style='color:gray;font-size:14px'>&#8776; &#163;"+(390*(issue.bounty/100000000)).toFixed(2)+"</span></td>";
                 html += '<td><a href="issue.html?id=' + issue.id + '">' + issue.issueName + "</a></td>";
                 html += "<td>" + issue.repoName + "</td>";
                 html += "<td>" + issue.language + "</td>";

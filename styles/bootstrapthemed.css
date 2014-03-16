@@ -28,7 +28,8 @@ html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:1
 
 
 .btn {
-	font-family:HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Lato, Arial, 'Lucida Grande', sans-serif;
+  font-family:'Merriweather',serif;
+	text-transform: none;
   border: none;
   font-size: 13px;
   font-weight: normal;

@@ -27,14 +27,14 @@ define(["common",
                         var bounty = bountyList[i];
                         var html = "<tr>";
                         totalBounty += parseInt(bounty.amount);
-                        html += "<td>" + bounty.amount + "</td>";
+                        html += "<td>" + (bounty.amount/100000000) + "</td>";
                         console.log(bounty.createdAt);
                         html += "<td>" + moment(bounty.createdAt).format("MMM Do YYYY") + "</td>";
                         html += "<td>" + moment(bounty.expiresAt).format("MMM Do YYYY") + "</td>";
                         html += "</tr>";
                         $('#bounty-list > tbody:last').append(html);
                     }
-                    $('#claim-bounty').html("Claim "+totalBounty+" <i class='fa fa-btc'></i> Bounty");
+                    $('#claim-bounty').html("Claim "+(totalBounty/100000000)+" <i class='fa fa-btc'></i> Bounty");
 
                 });
             } else {

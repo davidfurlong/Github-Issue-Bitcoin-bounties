@@ -67,7 +67,8 @@ addBountyBtn {
 }
 
 .back-link {
-	font-size:13pt;
+	font-size:18pt;
+	margin-top:-5px;
 }
 
 button[type="button"],button[type="submit"]{
@@ -128,16 +129,14 @@ footer .row span {
 #create-bounty input {
 	outline:none !important;
 }
-#claim-bounty:hover {
-	margin-top:6px !important;
-}
+
 #add-bounty:hover {
 	margin-top:8px !important;
 }
 
 #add-bounty {
 	font-size:13px;
-	font-family:'Merriweather';
+	font-family:'Merriweather',serif;
 	text-transform: none;
 }
 
