@@ -2,6 +2,7 @@ require("../../models/models")
 var Url = require('url')
 var querystring = require('querystring')
 var http = require("http")
+var Request = require("request")
 
 exports.getIssues = function(req, res){
 	searchQuery = {}
@@ -132,6 +133,8 @@ exports.addBounty = function(req, res){
 				issueUrl = body.issueUri;
 				issueParts = idFromUrl(issueUrl);
 				issueStrId = issueParts.join("/");
+
+				getGithubIssue(issueParts, processGithubIssue);
 
 				Issue.findOrCreate(
 					{strid:issueStrId}, 
@@ -293,4 +296,45 @@ function posturl(url,params,successcallback,errorcallback){
 	});
 	req.write(post_data);
 	req.end();
+}
+
+function processGithubIssue(body) {
+	console.log(body.title)
+}
+
+function processGithubRepo(body) {
+	console.log("Language: " + body.language);
+	console.log("Star count" + body.stargazers_count);
+}
+
+var github_auth = process.env.GITHUB_TOKEN?{'user': process.env.GITHUB_TOKEN, 'sendImmediately': true}:null;
+
+var github_options = {
+		headers: {
+			"User-Agent": "EdShaw/gitspur",
+			"Accept": "application/vnd.github.v3+json",
+		},
+		auth: github_auth,
+	}
+
+function getGithubIssue(issueParts, callback){
+	var url = 'https://api.github.com/repos/' + issueParts[0] + "/" + issueParts[1] + '/issues/' + issueParts[2];
+	var req = Request.get(url, github_options, function(err, res, body) {
+		if (!err & res.statusCode == 200) {
+			callback(body)
+		} else {
+			console.log("Error: "+err);
+		}
+	});
+}
+
+function getGithubRepo(issueParts, callback){
+	var url ='https://api.github.com/repos/' + issueParts[0] + "/" + issueParts[1];
+	var req = Request.get(url, github_options, function(err, res, body) {
+		if (!err & res.statusCode == 200) {
+			callback(body)
+		} else {
+			console.log("Error: "+err);
+		}
+	});
 }
