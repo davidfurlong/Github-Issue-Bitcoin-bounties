@@ -224,7 +224,7 @@ try
 				return
 			}
 			
-			Issues.find(qr.IssueId, {transaction:t}).then(function(qr2){
+			Issue.find(qr.IssueId, {transaction:t}).then(function(qr2){
 				if (qr2 == null){
 					res.send(404, "Error, corresponding Issue not found.")
 					return
@@ -269,6 +269,61 @@ catch(err)
 	res.statusCode=500;
 	res.send(error);
 }
+}
+
+exports.block = function(req, res){
+	var body = req.body;
+	sequelize.transaction(function(t) {
+		Transactions.findAll(
+			{ where: { confirmed:false} },
+			{transaction:t}
+			).then(function(qr){
+			if (qr == null){
+				res.send(200, "No data")
+				return
+			}
+			for(var i = 0; i < qr.length; i++) {
+				console.log(qr[i]);
+			}
+/*
+			Issues.find(qr.IssueId, {transaction:t}).then(function(qr2){
+				if (qr2 == null){
+					res.send(404, "Error, corresponding Issue not found.")
+					return
+				}
+				qr2.amount = (new Number(qr2.amount) + new Number(body.amount)).toString();
+				qr2.save({transaction:t});
+			});
+
+			qr.amount = (new Number(qr.amount) + new Number(body.amount)).toString();
+			qr.save({transaction:t});
+			Transactions.create(
+			{
+				amount:body.amount, 
+				confirmed:0,
+				txid:body.txid,
+				BountyId:qr.id,
+				txbtid:(body.txid + qr.id)
+			}, function(error) {
+				console.log(error);
+				res.statusCode=500;
+				res.send(error);
+				return;
+			}, 
+			{transaction:t}
+			).then(function(bounty){ 
+				res.statusCode=200;
+			    res.setHeader('Content-Type', 'application/json');
+				res.end(JSON.stringify(bounty));
+				t.commit();
+			},function(error) {
+							console.log(error);
+							res.statusCode=500;
+							res.send(error);
+							return;
+			});*/
+		})
+	});
 }
 
 function idFromUrl(url){
