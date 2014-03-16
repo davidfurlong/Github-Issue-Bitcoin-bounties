@@ -143,6 +143,7 @@ exports.claimBountyCallback = function(req, res){
 				console.log("Status: " + issue.state);
 				if(issue.state == "closed"){
 					payout(issue.id, req.query.userwallet);
+					res.send(200, "Thanks!")
 				}
 			});
 		})
