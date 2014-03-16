@@ -176,7 +176,6 @@ exports.addBounty = function(req, res){
 							res.send(error);
 							return;
 					});
-
 				}).catch(function(error){
 					console.log(error);
 					res.statusCode=500;
