@@ -289,7 +289,7 @@ exports.block = function(req, res){
 			res.send(200, "No data")
 			return
 		}
-		qr.forEach(function(i, tra, a){
+		qr.forEach(function(tra, i, a){
 			console.log("Tra: " + tra)
 			console.log("txid" + tra.txid)
 
