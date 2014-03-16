@@ -135,6 +135,12 @@ exports.addBounty = function(req, res){
 			.defer(getGithubRepo, issueParts)
 			.defer(posturl, '/create.php', {})
 			.await(function(error, issue, repo, wallet){
+				if(error){
+					console.log(error);
+					res.statusCode=500;
+					res.send(error);
+					return;
+				}
 				var addprv = wallet.split("\n")
 				sequelize.transaction(function(t) {
 					Issue.findOrCreate(
