@@ -38,10 +38,12 @@ define(["common",
                             });
                         } else {
                             $('#url').parent().addClass('has-error');
+
                         }
                     });
                 } else {
                     $('#url').parent().addClass('has-error');
+                    $('#url').focus();
                 }
             });
             /*

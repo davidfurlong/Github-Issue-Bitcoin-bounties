@@ -54,5 +54,8 @@ table.tablesorter thead tr .headerSortDown {
 table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
 	/*background-color: #8dbdd8;*/
 	background-color: royalblue;
+	-webkit-font-smoothing: subpixel-antialiased;
+  	-webkit-transition: border .25s linear, color .25s linear, background-color .25s linear;
+  transition: border .25s linear, color .25s linear, background-color .25s linear;
 	color:white;
 }
