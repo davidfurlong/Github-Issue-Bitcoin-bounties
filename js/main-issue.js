@@ -53,7 +53,7 @@ define(["common",
             });
         });
         
-
+        $("#claim-bounty").attr('href','claimBounty?issueId='+issueId);
         $("#claim-bounty").click(function(e) {
             e.preventDefault();
             document.location.href = serverAPI.CLAIM_URL;
