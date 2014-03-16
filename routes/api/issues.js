@@ -341,7 +341,7 @@ function idFromUrl(url){
 
 function posturl(url,params,callback){
 
-	console.log("posturl")
+	console.log("posturl " + url + " : " + params)
 
 	var post_data = querystring.stringify(params);
 
