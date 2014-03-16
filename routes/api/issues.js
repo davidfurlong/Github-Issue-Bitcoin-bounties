@@ -141,7 +141,7 @@ exports.claimBountyCallback = function(req, res){
 			console.log(url)
 			Request.get(url, repoRequest, function(err, response, issue){
 				console.log("Status: " + issue.state);
-				if(issue.state == "closed"){git a
+				if(issue.state == "closed"){
 					payout(issue.id, req.query.userwallet);
 					res.send(200, "Thanks!")
 				}
