@@ -22,7 +22,7 @@ Issue = sequelize.define('Issue', {
   uri: Sequelize.STRING,
   amount: {type: Sequelize.BIGINT, allowNull: false},
   confirmedAmount: {type: Sequelize.BIGINT, allowNull: false},
-  // expiresAt: {type: Sequelize.DATE, allowNull: false},
+  expiresAt: {type: Sequelize.DATE, allowNull: true},
 })
 
 Bounty = sequelize.define('Bounty', {
@@ -46,7 +46,7 @@ Transactions = sequelize.define('Transactions', {
 
 Bounty.hasOne(Transactions)
 
-sequelize.sync()
+sequelize.sync({force:true})
 
 exports.Transactions = Transactions
 exports.Issue = Issue

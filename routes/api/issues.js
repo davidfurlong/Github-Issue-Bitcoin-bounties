@@ -141,7 +141,15 @@ exports.addBounty = function(req, res){
 					res.send(error);
 					return;
 				}
-				var addprv = wallet.split("\n")
+				var addprv = wallet.split("\n");
+
+				var date = new Date(body.expiresAt);
+				if(date instanceof Date && !isNaN(date.valueOf())){
+					//Date is a date :)
+				} else {
+					date=null;
+				}
+				console.log(date)
 				sequelize.transaction(function(t) {
 					Issue.findOrCreate(
 						{strid:issueStrId}, 
@@ -152,11 +160,16 @@ exports.addBounty = function(req, res){
 							repo: issueParts[1],
 							issueName: issue.title,
 							language: repo.language?repo.language:"Unknown",
+							expiresAt: body.expiresAt,
 							confirmedAmount:0,
 							amount:0,
 						}, 
 						{transaction:t}
 					).then(function(issue){
+
+						issue.expiresAt = new Date(Math.max.apply(null,[issue.expiresAt, date]))
+						issue.save();
+
 						Bounty.create(
 							{
 								amount:0, 
@@ -415,7 +428,7 @@ function getGithubIssue(issueParts, callback){
 			callback(err, body);
 		} else {
 			console.log("Error: "+err);
-			callback("Issue Failure")
+			callback("GitHub Issue Failure")
 		}
 	});
 }
@@ -427,7 +440,7 @@ function getGithubRepo(issueParts, callback){
 			callback(err, body);
 		} else {
 			console.log("Error: "+err);
-			callback("Bounty Failure")
+			callback("GitHub Bounty Failure")
 		}
 	});
 }
