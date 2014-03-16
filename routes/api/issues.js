@@ -449,8 +449,8 @@ console.log(github_options.headers["Authorization"]);
 
 var extend = require('util')._extend;
 
-exports.payout = function(req, res){
-	Issue.find({where: {payoutToken: req.body.payoutToken}}).then(function(qr){
+function payout(issueid, pto) {
+	Issue.find(issueid).then(function(qr){
 		if (qr == null){
 			res.send(404, "Not found.")
 			return
@@ -474,7 +474,7 @@ exports.payout = function(req, res){
 			console.log("~~~~~~~~~~~~~~~~~")
 			console.log(allpriv)
 			console.log(req.body.to)
-			posturl('/sendall.php', {privkeys:allpriv, to:req.body.to})
+			posturl('/sendall.php', {privkeys:allpriv, to:pto})
 			res.send(200, "Done")
 		});
 	});
