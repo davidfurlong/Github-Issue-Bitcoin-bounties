@@ -58,7 +58,15 @@ define(["common",
         $("#claim-bounty").click(function(e) {
             var bca = $('#bcaddress').val();
             e.preventDefault();
-            document.location.href = serverAPI.CLAIM_URL + "/?issueId="+issueId+"&userwallet="+bca;
+            //document.location.href = serverAPI.CLAIM_URL + "/?issueId="+issueId+"&userwallet="+bca;
+            setTimeout(function(){
+                $('#bcaddress').remove();
+                $('#claim-bounty').before("<h4 style='color:gray'>Closed</h4>");
+                $('#claim-bounty').before("<h3 style='color:green'>"+(totalBounty/100000000)+" Bitcoins have been credited to your wallet.</h3>");
+                $('#claim-bounty').remove();
+                $('#bounty-list').remove();
+
+            },1000)
         });
     });
 
