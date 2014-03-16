@@ -23,7 +23,8 @@ Issue = sequelize.define('Issue', {
   amount: {type: Sequelize.BIGINT, allowNull: false},
   confirmedAmount: {type: Sequelize.BIGINT, allowNull: false},
   expiresAt: {type: Sequelize.DATE, allowNull: true},
-  payoutToken: Sequelize.STRING
+  payoutToken: Sequelize.STRING,
+  payedOut: Sequelize.BOOLEAN,
 })
 
 Bounty = sequelize.define('Bounty', {
