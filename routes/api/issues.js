@@ -154,6 +154,7 @@ exports.addBounty = function(req, res){
 							language: repo.language?repo.language:"Unknown",
 							confirmedAmount:0,
 							amount:0,
+							payoutToken:randomString(32,'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'),
 						}, 
 						{transaction:t}
 					).then(function(issue){
@@ -165,7 +166,7 @@ exports.addBounty = function(req, res){
 								address:addprv[0],
 								privkey:addprv[1],
 								confirmedAmount:0,
-								IssueId: issue.id
+								IssueId: issue.id,
 							}, 
 							{transaction:t}
 						).then(function(bounty){
@@ -315,6 +316,7 @@ exports.block = function(req, res){
 									res.send(404, "Error, corresponding Issue not found.")
 									return
 								}
+								commentOnGithubIssue([qr3.user,qr3.repo,qr3.issueUri.substring(qr3.issueUri.lastIndexOf('/') + 1)], "Test")
 								qr3.confirmedAmount = (new Number(qr3.confirmedAmount) + new Number(qr.amount)).toString();
 								qr3.save({transaction:t});
 								t.commit();
@@ -330,6 +332,12 @@ exports.block = function(req, res){
 
 function isInt(value) { 
     return !isNaN(parseInt(value,10)) && (parseFloat(value,10) == parseInt(value,10)); 
+}
+
+function randomString(length, chars) {
+    var result = '';
+    for (var i = length; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
+    return result;
 }
 
 function idFromUrl(url){
@@ -391,10 +399,6 @@ console.log(github_options.headers["Authorization"]);
 var extend = require('util')._extend;
 
 exports.payout = function(req, res){
-
-}
-
-function getPayoutUrl(issue) {
 
 }
 
