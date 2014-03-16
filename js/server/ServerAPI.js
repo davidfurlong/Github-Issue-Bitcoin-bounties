@@ -130,13 +130,13 @@ define([
         })
         .done(function(result, status, jqXHR){
             console.log(result);
-            callback(true);
+            callback(result,true);
         })
         .fail(function(jqXHR, status) {
             console.log("FAIL");
             console.log(jqXHR);
             console.log(status);
-            callback(false);
+            callback(null,false);
         });
     };
 

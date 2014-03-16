@@ -33,15 +33,19 @@ define(["common",
                             $('#submitButton').addClass('btn-success');
                             $('#url').parent().addClass('has-success');
                             $('#submitButton').html('<i class="fa fa-refresh fa-spin"></i> Generating');
-                            serverAPI.createBounty(githubURL, email, 20, new Date(Date.now()), function(wasSuccessful) {
-                                console.log(wasSuccessful);
+                            serverAPI.createBounty(githubURL, email, 20, new Date(Date.now()), function(res,wasSuccessful) {
+                                alert(res);
+                                $('#create-bounty').html('<form class="form-horizontal" role="form"><div class="form-group"><label class="col-sm-4 control-label">Bitcoin Address to send Reward to</label><div class="col-sm-8"><p class="form-control-static">'+res.address+'</p></div></div></form>');
+                                $('#add-bounty-form').find('h3').text('Add Bounty (2/2)');
                             });
                         } else {
+                            // FAILURE
                             $('#url').parent().addClass('has-error');
-
+                            $('#url').focus();
                         }
                     });
                 } else {
+                    // FAILURE
                     $('#url').parent().addClass('has-error');
                     $('#url').focus();
                 }
@@ -61,16 +65,21 @@ define(["common",
                 },500);
             });
             */
-            
-            $('#bounty').keyup(function(){
-                if($('#bounty').val().match(/^-?\d*(\.\d+)?$/) && $('#bounty').val()!=""){ // #TODO
-                    $('#bounty').parent().removeClass('has-error');
-                    $('#bounty').parent().addClass('has-success');
-                }
-                else {
-                    $('#bounty').parent().removeClass('has-success');
-                    $('#bounty').parent().addClass('has-error');
-                }
+            var timer=null;
+            var emailregex = /[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+\.[a-zA-Z]+/g;
+            $('#email').keyup(function(){
+                if(timer!=null)
+                    clearTimeout(timer);
+                timer = setTimeout(function(){
+                    if($('#email').val()!="" && $('#email').val().match(emailregex)){ // #TODO
+                        $('#email').parent().removeClass('has-error');
+                        $('#email').parent().addClass('has-success');
+                    }
+                    else {
+                        $('#email').parent().removeClass('has-success');
+                        $('#email').parent().addClass('has-error');
+                    }
+                },500);
             });
         });
     });

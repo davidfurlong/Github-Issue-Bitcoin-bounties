@@ -5,15 +5,18 @@ table.tablesorter {
 	font-size: 12pt;
 	width: 100%;
 	text-align: left;
-	border-top-right-radius: 5px;
-	border-top-left-radius:5px;
+	border-top-right-radius: 4px;
+	border-top-left-radius:4px;
 	overflow:hidden;
 }
 table.tablesorter thead tr th, table.tablesorter tfoot tr th {
 	background-color: #eee;
 	font-size: 10pt;
 	padding:10px 20px 10px 10px;
-	border-right:1px solid white;
+	border-left:2px solid white;
+}
+table.tablesorter thead tr th:first-child, table.tablesorter tfoot tr th:first-child {
+	border-left:0px;
 }
 table.tablesorter tbody tr{
 	border-top:1px solid #eee;
