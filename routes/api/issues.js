@@ -111,7 +111,9 @@ exports.getBounty = function(req, res){
 
 exports.claimBounty = function(req, res){
 	var uri = "https://github.com/login/oauth/authorize?client_id=" + 
-		process.env.GITHUBID + "&redirect_uri=https://git-spur.herokuapp.com/oauth/callback?issueId=" + req.query.issueId;
+		process.env.GITHUBID + "&redirect_uri=https://git-spur.herokuapp.com/oauth/callback"+
+		"?issueId=" + req.query.issueId + 
+		"&wuserwallet=" + req.query.userwallet
 	res.redirect(uri);
 }
 
@@ -140,7 +142,7 @@ exports.claimBountyCallback = function(req, res){
 			Request.get(url, repoRequest, function(err, response, issue){
 				console.log("Status: " + issue.state);
 				if(issue.state == "closed"){
-					req.redirect("")
+					payout(issue.id, req.query.userwallet);
 				}
 			});
 		})
