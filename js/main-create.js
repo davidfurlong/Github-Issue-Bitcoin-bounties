@@ -16,26 +16,32 @@ define(["common",
                 var bounty = $("#bounty").val();
                 var expirationDate = $("#expirationDate").val();
 
-                // Validate
+                // Validate other fields first
+
+                // Validate GitHub URL
                 var issueRegex = /^https?\:\/\/github.com\/(((?!\/).)+)\/(((?!\/).)+)\/issues\/(\d+)($|\/.*|\s*)$/;
                 var result = issueRegex.exec(githubURL);
-                var api = new GitHubAPI();
+                var githubAPI = new GitHubAPI();
                 if (typeof result != "undefined" && result != null) {
                     var username = result[1];
                     var repoName = result[3];
                     var issueNumber = parseInt(result[5]);
-                    api.issueExists(username, repoName, issueNumber, function(res) {
+                    githubAPI.issueExists(username, repoName, issueNumber, function(res) {
                         if (res) {
+                            // SUCCESS
                             $('#submitButton').removeClass('btn-default');
                             $('#submitButton').addClass('btn-success');
                             $('#url').parent().addClass('has-success');
                             $('#submitButton').html('<i class="fa fa-refresh fa-spin"></i> Generating');
+                            serverAPI.createBounty(githubURL, email, 20, new Date(Date.now()), function(wasSuccessful) {
+                                console.log(wasSuccessful);
+                            });
                         } else {
                             $('#url').parent().addClass('has-error');
                         }
                     });
                 } else {
-                    console.warn("failed");
+                    $('#url').parent().addClass('has-error');
                 }
             });
             /*
