@@ -19,7 +19,7 @@ define(["common",
         var totalBounty = 0;
         serverAPI.getIssue(issueId, function(issue) {
             if (issue != null) {
-                $("#name-text").text(issue.issueName + "@" + issue.repoName);
+                $("#name-text").html(issue.issueName + "<span style='color:gray'> in repo </span>" + issue.repoName);
                 $("#amount-text").text(issue.bounty);
                 
                 serverAPI.getBountiesForIssue(issue.id, function(bountyList) {
