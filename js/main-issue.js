@@ -11,8 +11,9 @@ define(["common",
         "bootstrap", 
         "tablesorter",
         "moment",
-        "server/ServerAPI"
-    ], function($, bootstrap, tablesorter, moment, ServerAPI) {
+        "server/ServerAPI",
+        "github/GitHubAPI"
+    ], function($, bootstrap, tablesorter, moment, ServerAPI, GitHubAPI) {
         var issueId = getURLParameter("id");
         var serverAPI = new ServerAPI();
         var totalBounty = 0;
@@ -38,6 +39,18 @@ define(["common",
             } else {
                 $($('.outermost > .row:nth-child(2)').children()[1]).html('<div class="row"><div class="col-md-12"><div class="alert alert-danger">Issue not found</div></div></div>');
             }
+
+            console.log(issue);
+
+            var githubAPI = new GitHubAPI();
+            var reg = /^https?\:\/\/github.com\/(((?!\/).)+)\/(((?!\/).)+)\/issues\/(\d+)($|\/.*|\s*)$/.exec(issue.uri);
+            var username = reg[1];
+            var issueNumber = reg[5];
+            githubAPI.issueExists(username, issue.repoName, issueNumber, function(success, fullIssue) {
+                if (success) {
+                    $("#body").text(fullIssue.body);
+                }
+            });
         });
         
 
