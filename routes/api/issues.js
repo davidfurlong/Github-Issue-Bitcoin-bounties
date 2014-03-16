@@ -3,6 +3,7 @@ var Url = require('url')
 var querystring = require('querystring')
 var http = require("http")
 var Request = require("request")
+var Queue = require("queue-async")
 
 exports.getIssues = function(req, res){
 	searchQuery = {}
@@ -125,67 +126,69 @@ exports.addBounty = function(req, res){
 	var valid = validateBounty(body);
 
 	if(valid) {
-		posturl('/create.php',{},function(wallet) {
-			var addprv = wallet.split("\n")
 
-			sequelize.transaction(function(t) {
+		issueUrl = body.issueUri;
+		issueParts = idFromUrl(issueUrl);
+		issueStrId = issueParts.join("/");
 
-				issueUrl = body.issueUri;
-				issueParts = idFromUrl(issueUrl);
-				issueStrId = issueParts.join("/");
-
-				getGithubIssue(issueParts, processGithubIssue);
-
-				Issue.findOrCreate(
-					{strid:issueStrId}, 
-					{
-						strid: issueStrId,
-						uri: body.issueUri,
-						user: issueParts[0],
-						repo: issueParts[1],
-						issueName: "Fake issue name.",
-						language: "Fake langugage.",
-						confirmedAmount:0,
-						amount:0
-					}, 
-					{transaction:t}
-				).then(function(issue){
-					Bounty.create(
+		Queue()
+			.defer(getGithubIssue, issueParts)
+			.defer(getGithubRepo, issueParts)
+			.defer(posturl, '/create.php', {})
+			.await(function(error, issue, repo, wallet){
+				var addprv = wallet.split("\n")
+				sequelize.transaction(function(t) {
+					Issue.findOrCreate(
+						{strid:issueStrId}, 
 						{
-							amount:0, 
-							email:body.email, 
-							expiresAt:body.expiresAt,
-							address:addprv[0],
-							privkey:addprv[1],
+							strid: issueStrId,
+							uri: body.issueUri,
+							user: issueParts[0],
+							repo: issueParts[1],
+							issueName: issue.title,
+							language: repo.language?repo.language:"Unknown",
 							confirmedAmount:0,
-							IssueId: issue.id
+							amount:0
 						}, 
 						{transaction:t}
-					).then(function(bounty){
-						res.statusCode=200;
-					    res.setHeader('Content-Type', 'application/json');
+					).then(function(issue){
+						Bounty.create(
+							{
+								amount:0, 
+								email:body.email, 
+								expiresAt:body.expiresAt,
+								address:addprv[0],
+								privkey:addprv[1],
+								confirmedAmount:0,
+								IssueId: issue.id
+							}, 
+							{transaction:t}
+						).then(function(bounty){
+							res.statusCode=200;
+						    res.setHeader('Content-Type', 'application/json');
 
-					    response = {
-					    	"bounty": bounty,
-					    	"issue": issue,
-					    	"address": bounty.address
-					    };
+						    response = {
+						    	"bounty": bounty,
+						    	"issue": issue,
+						    	"address": bounty.address
+						    };
 
-						res.end(JSON.stringify(response));
-						t.commit();
-					}).catch(function(error) {
-							console.log(error);
-							res.statusCode=500;
-							res.send(error);
-							return;
+							res.end(JSON.stringify(response));
+							t.commit();
+						}).catch(function(error) {
+								console.log(error);
+								res.statusCode=500;
+								res.send(error);
+								return;
+						});
+					}).catch(function(error){
+						console.log(error);
+						res.statusCode=500;
+						res.send(error);
 					});
-				}).catch(function(error){
-					console.log(error);
-					res.statusCode=500;
-					res.send(error);
 				});
-			})
 		});
+				//End of Queue.
 	} else {
 		res.send(400, "Invalid bounty.");
 	}
@@ -271,7 +274,10 @@ function idFromUrl(url){
 	return [user, repo, issue]
 }
 
-function posturl(url,params,successcallback,errorcallback){
+function posturl(url,params,callback){
+
+	console.log("posturl")
+
 	var post_data = querystring.stringify(params);
 
 	var options = {
@@ -288,42 +294,60 @@ function posturl(url,params,successcallback,errorcallback){
 	var req = http.request(options, function(res) {
 	  res.setEncoding('utf8');
 	  res.on('data', function (chunk) {
-	    successcallback(chunk);
+	    callback(null, chunk);
 	  });
 	});
 	req.on('error', function(e) {
-  		errorcallback(e);
+  		callback(e, null);
 	});
 	req.write(post_data);
 	req.end();
 }
 
-function processGithubIssue(body) {
-	console.log(body.title)
-}
-
-function processGithubRepo(body) {
-	console.log("Language: " + body.language);
-	console.log("Star count" + body.stargazers_count);
-}
-
-var github_auth = process.env.GITHUB_TOKEN?{'user': process.env.GITHUB_TOKEN, 'sendImmediately': true}:null;
+var github_auth = new Buffer(process.env.GITHUB_TOKEN).toString('base64');
 
 var github_options = {
+		json: true,
 		headers: {
 			"User-Agent": "EdShaw/gitspur",
-			"Accept": "application/vnd.github.v3+json",
+			// "Accept": "application/vnd.github.v3+json",
 		},
-		auth: github_auth,
 	}
+
+if (github_auth) {
+	github_options.headers["Authorization"] = "Basic " + github_auth;
+}
+
+console.log(github_options.headers["Authorization"]);
+
+var extend = require('util')._extend;
+
+function commentOnGithubIssue(issueParts, comment, callback){
+	var url = 'https://api.github.com/repos/' + issueParts[0] + "/" + issueParts[1] + '/issues/' + issueParts[2] + "/comments";
+	var comment = JSON.stringify({"body": comment});
+
+	var options = extend({}, github_options);
+	options["body"] = comment;
+
+	var req = Request.post(url,  options, function(err, res, body) {
+		if (!err & (res.statusCode<400) & (res.statusCode>=200)) {
+			callback(err, body)
+		} else {			
+			console.log("Error: "+err);
+			callback(err);
+		}
+	});
+}
 
 function getGithubIssue(issueParts, callback){
 	var url = 'https://api.github.com/repos/' + issueParts[0] + "/" + issueParts[1] + '/issues/' + issueParts[2];
 	var req = Request.get(url, github_options, function(err, res, body) {
-		if (!err & res.statusCode == 200) {
-			callback(body)
+
+		if (!err & res.statusCode <400 & res.statusCode>=200) {
+			callback(err, body);
 		} else {
 			console.log("Error: "+err);
+			callback(err)
 		}
 	});
 }
@@ -331,10 +355,11 @@ function getGithubIssue(issueParts, callback){
 function getGithubRepo(issueParts, callback){
 	var url ='https://api.github.com/repos/' + issueParts[0] + "/" + issueParts[1];
 	var req = Request.get(url, github_options, function(err, res, body) {
-		if (!err & res.statusCode == 200) {
-			callback(body)
+		if (!err & res.statusCode <400 & res.statusCode>=200) {
+			callback(err, body);
 		} else {
 			console.log("Error: "+err);
+			callback(err)
 		}
 	});
 }
