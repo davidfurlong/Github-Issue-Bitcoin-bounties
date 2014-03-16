@@ -1,0 +1,49 @@
+#! /bin/bash
+
+curl -d '{
+"issueUri":"https://github.com/CadiT/RecipeBook/issues/1",
+"name":"Gantt chart recipes",
+"amount":"10",
+"email":"edwardshaw9@gmail.com",
+"expiresAt":"2015-01-01"
+}' -X POST -H "Content-Type: application/json" localhost:3000/api/bounties/
+
+curl -d '{
+"issueUri":"https://github.com/CadiT/RecipeBook/issues/1",
+"name":"Gantt chart recipes",
+"amount":"30",
+"email":"edwardshaw9@gmail.com",
+"expiresAt":"2015-01-01"
+}' -X POST -H "Content-Type: application/json" localhost:3000/api/bounties/
+
+curl -d '{
+"issueUri":"https://github.com/CadiT/RecipeBook/issues/1",
+"name":"Gantt chart recipes",
+"amount":"20",
+"email":"edwardshaw9@gmail.com",
+"expiresAt":"2015-01-01"
+}' -X POST -H "Content-Type: application/json" localhost:3000/api/bounties/
+
+curl -d '{
+"issueUri":"https://github.com/CadiT/RecipeBook/issues/2",
+"name":"Recipe search",
+"amount":"10",
+"email":"edwardshaw9@gmail.com",
+"expiresAt":"2015-01-01"
+}' -X POST -H "Content-Type: application/json" localhost:3000/api/bounties/
+
+curl -d '{
+"issueUri":"https://github.com/CadiT/RecipeBook/issues/2",
+"name":"Recipe search",
+"amount":"10",
+"email":"edwardshaw9@gmail.com",
+"expiresAt":"2015-01-01"
+}' -X POST -H "Content-Type: application/json" localhost:3000/api/bounties/
+
+curl -d '{
+"issueUri":"https://github.com/CadiT/RecipeBook/issues/3",
+"name":"Tasty",
+"amount":"100",
+"email":"edwardshaw9@gmail.com",
+"expiresAt":"2015-01-01"
+}' -X POST -H "Content-Type: application/json" localhost:3000/api/bounties/
