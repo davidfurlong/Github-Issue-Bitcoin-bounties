@@ -10,8 +10,9 @@ define(["common",
         "jquery",
         "bootstrap", 
         "tablesorter",
+        "moment",
         "server/ServerAPI"
-    ], function($, bootstrap, tablesorter, ServerAPI) {
+    ], function($, bootstrap, tablesorter, moment, ServerAPI) {
         var issueId = getURLParameter("id");
         var serverAPI = new ServerAPI();
         var totalBounty = 0;
@@ -27,8 +28,9 @@ define(["common",
                         var html = "<tr>";
                         totalBounty += parseInt(bounty.amount);
                         html += "<td>" + bounty.amount + "</td>";
-                        html += "<td>" + bounty.createdAt + "</td>";
-                        html += "<td>" + bounty.expiresAt + "</td>";
+                        console.log(bounty.createdAt);
+                        html += "<td>" + moment(bounty.createdAt).format("MMM Do YYYY") + "</td>";
+                        html += "<td>" + moment(bounty.expiresAt).format("MMM Do YYYY") + "</td>";
                         html += "</tr>";
                         $('#bounty-list > tbody:last').append(html);
                     }
