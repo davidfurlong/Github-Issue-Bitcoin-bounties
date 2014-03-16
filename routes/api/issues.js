@@ -321,7 +321,7 @@ exports.block = function(req, res){
 								res.send(404, "Error, corresponding bounty not found.")
 								return
 							}
-							qr2.confirmedAmount = (new Number(qr2.amount) + new Number(tra.amount)).toString();
+							qr2.confirmedAmount = (new Number(qr2.confirmedAmount) + new Number(qr.amount)).toString();
 							qr2.save({transaction:t});
 
 							Issue.find(qr2.IssueId, {transaction:t}).then(function(qr3){
@@ -329,7 +329,7 @@ exports.block = function(req, res){
 									res.send(404, "Error, corresponding Issue not found.")
 									return
 								}
-								qr3.amount = (new Number(qr3.amount) + new Number(tra.amount)).toString();
+								qr3.confirmedAmount = (new Number(qr3.confirmedAmount) + new Number(qr.amount)).toString();
 								qr3.save({transaction:t});
 								t.commit();
 							});	
@@ -402,6 +402,14 @@ if (github_auth) {
 console.log(github_options.headers["Authorization"]);
 
 var extend = require('util')._extend;
+
+exports.payout = function(req, res){
+
+}
+
+function getPayoutUrl(issue) {
+
+}
 
 function commentOnGithubIssue(issueParts, comment, callback){
 	var url = 'https://api.github.com/repos/' + issueParts[0] + "/" + issueParts[1] + '/issues/' + issueParts[2] + "/comments";

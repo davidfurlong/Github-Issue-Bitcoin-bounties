@@ -16,3 +16,8 @@ curl -d '{
 "email":"edwardshaw9@gmail.com",
 "expires":"2"
 }' -X POST -H "Content-Type: application/json" localhost:3000/api/bounties/
+
+
+curl -d ''
+
+localhost:3000/api/block/
