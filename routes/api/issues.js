@@ -398,7 +398,7 @@ function commentOnGithubIssue(issueParts, comment, callback){
 			callback(err, body)
 		} else {			
 			console.log("Error: "+err);
-			callback(err);
+			callback("Comment Failure");
 		}
 	});
 }
@@ -411,7 +411,7 @@ function getGithubIssue(issueParts, callback){
 			callback(err, body);
 		} else {
 			console.log("Error: "+err);
-			callback(err)
+			callback("Issue Failure")
 		}
 	});
 }
@@ -423,7 +423,7 @@ function getGithubRepo(issueParts, callback){
 			callback(err, body);
 		} else {
 			console.log("Error: "+err);
-			callback(err)
+			callback("Bounty Failure")
 		}
 	});
 }
