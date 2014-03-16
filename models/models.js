@@ -47,7 +47,7 @@ Transactions = sequelize.define('Transactions', {
 
 Bounty.hasOne(Transactions)
 
-sequelize.sync({force: true})
+sequelize.sync()
 
 exports.Transactions = Transactions
 exports.Issue = Issue

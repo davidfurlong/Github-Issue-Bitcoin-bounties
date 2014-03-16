@@ -321,8 +321,8 @@ exports.block = function(req, res){
 							if (qr2 == null){
 								res.send(404, "Error, corresponding bounty not found.")
 								return
-							}
-							qr2.confirmedAmount = (new Number(qr2.confirmedAmount) + new Number(qr.amount)).toString();
+							}console.log("-----------------")
+							qr2.confirmedAmount = (new Number(qr2.confirmedAmount) + new Number(tra.amount)).toString();
 							qr2.save({transaction:t});
 
 							Issue.find(qr2.IssueId, {transaction:t}).then(function(qr3){
@@ -330,8 +330,8 @@ exports.block = function(req, res){
 									res.send(404, "Error, corresponding Issue not found.")
 									return
 								}
-								commentOnGithubIssue([qr3.user,qr3.repo,qr3.issueUri.substring(qr3.issueUri.lastIndexOf('/') + 1)], "Test")
-								qr3.confirmedAmount = (new Number(qr3.confirmedAmount) + new Number(qr.amount)).toString();
+								commentOnGithubIssue([qr3.user,qr3.repo,qr3.uri.substring(qr3.uri.lastIndexOf('/') + 1)], "Test")
+								qr3.confirmedAmount = (new Number(qr3.confirmedAmount) + new Number(tra.amount)).toString();
 								qr3.save({transaction:t});
 								t.commit();
 							});	
