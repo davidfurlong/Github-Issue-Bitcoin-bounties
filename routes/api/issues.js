@@ -144,6 +144,8 @@ exports.claimBountyCallback = function(req, res){
 				if(issue.state == "closed"){
 					payout(issue.id, req.query.userwallet);
 					res.send(200, "Thanks!")
+				} else {
+					res.send(200, "Issue isn't closed! :(")
 				}
 			});
 		})
