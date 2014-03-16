@@ -9,6 +9,7 @@ define([
     ServerAPI.prototype.ISSUES_EXT = "issue/";
     ServerAPI.prototype.ISSUES_EXT = "issues/";
     ServerAPI.prototype.BOUNTIES_EXT = "bounties/";
+    ServerAPI.prototype.CLAIM_URL = "https://git-spur.herokuapp.com/claimbounty";
 
     ServerAPI.prototype.getAllIssues = function(callback) {
         var query = new ServerQuery();
@@ -58,9 +59,7 @@ define([
             url: requestURI
         })
         .done(function(result){
-            console.log()
             var datum = result.data;
-            console.log(datum);
             var id = datum.id;
             var issueName = datum.issueName;
             var repoName = datum.repo;
@@ -69,11 +68,9 @@ define([
             var amount = parseInt(datum.amount);
             var expiresAt = datum.expiresAt;
             var issue = new Issue(id, issueName, repoName, uri, language, amount, expiresAt);
-            console.log(issue);
             callback(issue);
         })
         .fail(function(jqXHR, status) {
-            console.error(status);
             callback(null);
         })
     };
@@ -92,7 +89,6 @@ define([
             var data = result.data;
             for (var i = 0; i < data.length; i++) {
                 var datum = data[i];
-                console.log(datum);
                 var id = datum.id;
                 var issueId = datum.IssueId;
                 var expiresAt = datum.expiresAt;
@@ -102,13 +98,11 @@ define([
                 var updatedAt = datum.updatedAt;
                 var bounty = new Bounty(id, issueId, createdAt, updatedAt, expiresAt, amount, email, true);
                 bountyList.push(bounty);
-                console.log(bounty);
             }
 
             callback(bountyList);
         })
         .fail(function(jqXHR, status) {
-            console.error(status);
             callback([]);
         });
     };
@@ -122,20 +116,15 @@ define([
 
         var postURL = this.SERVER_URI;
         postURL += this.BOUNTIES_EXT;
-        console.log(data);
         $.ajax({
             url: postURL,
             data: data,
             type: "POST",
         })
         .done(function(result, status, jqXHR){
-            console.log(result);
             callback(result, true);
         })
         .fail(function(jqXHR, status) {
-            console.log("FAIL");
-            console.log(jqXHR);
-            console.log(status);
             callback(null, false);
         });
     };

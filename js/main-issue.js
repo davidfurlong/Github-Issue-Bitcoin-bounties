@@ -22,13 +22,11 @@ define(["common",
                 $("#amount-text").text(issue.bounty);
 
                 serverAPI.getBountiesForIssue(issue.id, function(bountyList) {
-                    console.log(bountyList);
                     for (var i = 0; i < bountyList.length; i++) {
                         var bounty = bountyList[i];
                         var html = "<tr>";
                         totalBounty += parseInt(bounty.amount);
                         html += "<td>" + (bounty.amount/100000000) + "</td>";
-                        console.log(bounty.createdAt);
                         html += "<td>" + moment(bounty.createdAt).format("MMM Do YYYY") + "</td>";
                         html += "<td>" + moment(bounty.expiresAt).format("MMM Do YYYY") + "</td>";
                         html += "</tr>";
@@ -41,7 +39,12 @@ define(["common",
                 $($('.outermost > .row:nth-child(2)').children()[1]).html('<div class="row"><div class="col-md-12"><div class="alert alert-danger">Issue not found</div></div></div>');
             }
         });
+        
 
+        $("#claim-bounty").click(function(e) {
+            e.preventDefault();
+            document.location.href = serverAPI.CLAIM_URL;
+        })
     });
 
 });
