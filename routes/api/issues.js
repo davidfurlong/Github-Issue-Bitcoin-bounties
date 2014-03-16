@@ -330,7 +330,7 @@ exports.block = function(req, res){
 									res.send(404, "Error, corresponding Issue not found.")
 									return
 								}
-								commentOnGithubIssue([qr3.user,qr3.repo,qr3.uri.substring(qr3.uri.lastIndexOf('/') + 1)], "Test")
+								commentOnGithubIssue([qr3.user,qr3.repo,qr3.uri.substring(qr3.uri.lastIndexOf('/') + 1)], "Test", function(a,b) { })
 								qr3.confirmedAmount = (new Number(qr3.confirmedAmount) + new Number(tra.amount)).toString();
 								qr3.save({transaction:t});
 								t.commit();
