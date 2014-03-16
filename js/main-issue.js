@@ -41,7 +41,7 @@ define(["common",
             }
 
             console.log(issue);
-
+            /*
             var githubAPI = new GitHubAPI();
             var reg = /^https?\:\/\/github.com\/(((?!\/).)+)\/(((?!\/).)+)\/issues\/(\d+)($|\/.*|\s*)$/.exec(issue.uri);
             var username = reg[1];
@@ -51,6 +51,7 @@ define(["common",
                     $("#body").text(fullIssue.body);
                 }
             });
+            */
         });
         
 
