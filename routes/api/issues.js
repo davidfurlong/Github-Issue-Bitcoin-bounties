@@ -114,15 +114,12 @@ exports.claimBounty = function(req, res){
 }
 
 exports.claimBountyCallback = function(req, res){
-
-	console.log(req.params)
-
 	var options = {
 		json:true,
 		data:{
 			client_id: process.env.GITHUBID,
 			client_secret: process.env.GITHUBSECRET,
-			code: req.params.code,
+			code: req.query.code,
 		},
 	}
 
