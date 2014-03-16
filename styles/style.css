@@ -15,9 +15,8 @@ body {
 	font-style: italic;
 	font-weight:700;
 	padding-left:0px;
-	
 	font-size:25pt;
-	text-shadow: 1px 1px 0px #aaa;
+	//text-shadow: 1px 1px 0px #ccc;
 }
 
 .navbar {
@@ -68,7 +67,7 @@ footer {
 	clear:both;
 	background:royalblue;
 	color:#333;
-	border-top:2px solid #8EB6FF;
+	border-top:3px solid #8EB6FF;
 } 
 
 footer a {
@@ -93,7 +92,9 @@ footer .row span {
 	padding-right:20px;
 }
 
-
+#create-bounty input {
+	outline:none !important;
+}
 
 /*Opera Fix*/
 body:before {

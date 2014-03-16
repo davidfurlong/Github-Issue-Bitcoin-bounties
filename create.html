@@ -4,18 +4,12 @@
     <title>BitBounty</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script type="text/javascript" data-main="js/main-create" src="js/lib/require.js"></script>
   
-    <script src="js/lib/moment-with-langs.js"></script>
-    <script src="js/lib/jquery-2.1.0.min.js"></script>
-
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">  
-
     <link href="styles/bootstrapthemed.css" rel="stylesheet">
-
     <link href='http://fonts.googleapis.com/css?family=Merriweather:900italic,400' rel='stylesheet' type='text/css'>
-
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <link href='http://fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
     <link href="styles/style.css" rel="stylesheet">
   
@@ -37,7 +31,7 @@
           <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
               <li>
-                <button id="add-bounty" type="submit" class="btn btn-warning" style="margin-top:7px">Add a Bounty</button>
+                <button id="add-bounty" type="submit" class="btn btn-warning" style="margin-top:7px" disabled>Add a Bounty</button>
               </li>
             </ul>
           </div><!-- /.navbar-collapse -->
@@ -55,20 +49,22 @@
             <h3 style="margin-top:0px">Add Bounty</h3>
             <form role="form" id="create-bounty">
               <div class="form-group">
-                <label for="exampleInputEmail1">Github Issue URL</label>
-                <input type="url" class="form-control" id="create-issue-url" placeholder="Ex. https://github.com/willzeng/WikiNets/issues/169">
+                <label for="url">Github Issue URL</label>
+                <input type="url" class="form-control" id="url" placeholder="Ex. https://github.com/willzeng/WikiNets/issues/169">
               </div>
               <div class="form-group">
-                <label for="exampleInputEmail1">Email address</label>
-                <input type="email" class="form-control" id="create-email" placeholder="Ex. spurrobot@gmail.com">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" id="email" placeholder="Your email will only be used to confirm Bounty claims">
               </div>
+              <!--
               <div class="form-group">
-                <label for="exampleInputEmail1">Reward Amount in Bitcoins</label>
-                <input type="text" class="form-control" id="create-bitcoin-amount" placeholder="Ex. 0.0314 Bitcoins">
+                <label for="bounty">Bounty Amount in Bitcoins</label>
+                <input type="text" class="form-control" id="bounty" placeholder="Ex. 0.0314 Bitcoins">
               </div>
+              -->
               <div class="form-group">
-                <label for="exampleInputPassword1">Expiration Date [Optional]</label>
-                <input type="date" class="form-control" id="create-expiry" placeholder="">
+                <label for="expirationDate">Bounty Expiration Date [Optional]</label>
+                <input type="date" class="form-control" id="expirationDate" placeholder="">
               </div>
               <div class="checkbox">
                 <label>
@@ -76,7 +72,7 @@
                 </label>  
               </div>
               <br/>
-              <button type="submit" class="btn btn-default" id="create-bounty-button" disabled>Proceed to Payment</button>
+              <button id="submitButton" type="submit" class="btn btn-default">Proceed to Payment</button>
             </form>
             <!-- PAGE CONTENT END -->
           </div>
